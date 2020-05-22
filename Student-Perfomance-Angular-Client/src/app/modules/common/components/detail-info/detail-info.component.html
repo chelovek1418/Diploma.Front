@@ -1,0 +1,10 @@
+<div>
+    <p *ngIf="detail.teacher?.user">Teacher: <em>{{detail.teacher.position + ' '}}</em>
+        <a routerLink="/teachers/{{detail.teacher.id}}">{{detail.teacher.user.lastName + ' '}}
+            <span>{{detail.teacher.user.patronymic ? (detail.teacher.user.patronymic[0] + '. ' | uppercase) : '' }}</span>
+            <span>{{(detail.teacher.user.firstName[0] | uppercase)}}.</span>
+        </a></p>
+    <p *ngIf="detail.isNumerator === null">Every week</p>
+    <p *ngIf="detail.isNumerator === true">Numerical weeks only</p>
+    <p *ngIf="detail.isNumerator === false">Denominator weeks only</p>
+</div>

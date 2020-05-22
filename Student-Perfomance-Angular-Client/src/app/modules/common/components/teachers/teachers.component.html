@@ -1,0 +1,18 @@
+<section *ngIf="teachers">
+    <div class="list-header-container">
+        <h3>All teachers</h3>
+        <a mat-stroked-button routerLink="/teachers/unconfirmed" color="accent">Unconfirmed</a>
+    </div>
+    <mat-list>
+        <div *ngFor="let teach of paginatedTeachers">
+            <mat-list-item>
+                <a
+                    routerLink="/teachers/{{teach.id}}">{{teach.position + ' ' + teach.user.firstName + ' ' + teach.user.lastName + ' ' + teach.user.patronymic}}</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <mat-paginator color="accent" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
+    </mat-paginator>
+</section>

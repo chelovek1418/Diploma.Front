@@ -1,0 +1,19 @@
+<section>
+    <h3>Create group</h3>
+    <form [formGroup]="createGroupForm" novalidate (ngSubmit)="createGroup()">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Group title</mat-label>
+            <input #input matInput maxlength="20" placeholder="123a" type="text" formControlName="title">
+            <mat-error *ngIf="title.invalid && title.touched">
+                <div *ngIf="title.errors.uniqueTitle">This title is already taken</div>
+                <div *ngIf="title.errors.required">Title is required</div>
+                <div *ngIf="title.errors.minlength">Title must be at least 2 characters long</div>
+                <div *ngIf="title.errors.maxlength">Title must be less then 20 characters long</div>
+            </mat-error>
+            <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+          </mat-form-field>
+        <div *ngIf="title.pending">Validating...</div>
+        <button mat-stroked-button color="accent" type="submit" [disabled]="createGroupForm.invalid">Create group</button>
+    </form>
+    <a mat-stroked-button color="warn" routerLink="/groups">Cancel</a>
+</section>

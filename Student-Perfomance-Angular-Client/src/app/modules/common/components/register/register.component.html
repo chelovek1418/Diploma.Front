@@ -1,0 +1,82 @@
+<mat-horizontal-stepper color="accent" linear="true" #stepper>
+    <mat-step color="accent" [stepControl]="firstFormGroup">
+        <ng-template color="accent" matStepLabel>Choose role</ng-template>
+        <div class="card-container">
+            <mat-card (click)="chooseRole(true); stepper.next()">
+                <mat-card-header>
+                    <mat-card-title>Student</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <i class="fas fa-user-graduate fa-5x"></i>
+                </mat-card-content>
+            </mat-card>
+            <mat-card (click)="chooseRole(false); stepper.next()">
+                <mat-card-header>
+                    <mat-card-title>Teacher</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <i class="fas fa-user-tie fa-5x"></i>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="userFormGroup && roleFormGroup">
+        <form [formGroup]="userFormGroup">
+            <ng-template matStepLabel>General information</ng-template>
+            <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput formControlName="firstName" placeholder="Ivan" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" placeholder="Ivanenko" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Patronymic</mat-label>
+                <input matInput formControlName="patronymic" placeholder="Ivanovich">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="ivan@gmail.com" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Phone number</mat-label>
+                <input matInput formControlName="phoneNumber" type="tel" placeholder="380999999999" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Department</mat-label>
+                <input matInput formControlName="department" placeholder="503" required>
+            </mat-form-field>
+        </form>
+        <form [formGroup]="roleFormGroup">
+            <div *ngIf="isStudent === true">
+                <mat-form-field>
+                    <mat-label>Group</mat-label>
+                    <mat-select required formControlName="group">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let gr of groups" [value]="gr">{{gr.title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="isStudent === false">
+                <mat-form-field>
+                    <mat-label>Position</mat-label>
+                    <input matInput formControlName="position" placeholder="Professor" required>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext [disabled]="userFormGroup.valid === false || roleFormGroup.valid === false">Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div class="register-button-container">
+            <button (click)="submit()" mat-flat-button color="accent">Register!</button>
+        </div>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

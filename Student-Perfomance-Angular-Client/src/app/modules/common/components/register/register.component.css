@@ -1,0 +1,35 @@
+.card-container {
+    margin: 20px 0;
+    justify-content: space-around;
+    display: flex;
+}
+mat-card {
+    position: relative;
+    width: 30%;
+    cursor: pointer;
+}
+mat-card:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    background-color: #69f0ae;
+}
+mat-card-content, mat-card-header {
+    display: flex;
+    justify-content: center;
+}
+form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+mat-form-field {
+    margin: 0 5px;
+}
+.register-button-container {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+}
+.register-button-container button {
+    max-width: 100%;
+}

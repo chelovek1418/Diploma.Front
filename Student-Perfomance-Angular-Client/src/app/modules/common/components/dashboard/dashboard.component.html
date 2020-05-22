@@ -1,0 +1,21 @@
+<div>
+
+  <section>
+    <h3>GENERAL STATISTIC</h3>
+  </section>
+
+  <section *ngIf="students?.length > 0">
+    <h3>BEST STUDENTS</h3>
+    <div class="card-container">
+      <app-student-card *ngFor="let student of students" [student]="student"></app-student-card>
+    </div>
+  </section>
+
+  <section  *ngIf="groups?.length > 0">
+    <h3>BEST GROUPS</h3>
+    <div class="card-container">
+      <app-group-card *ngFor="let group of groups" [group]="group"></app-group-card>
+    </div>
+  </section>
+
+</div>

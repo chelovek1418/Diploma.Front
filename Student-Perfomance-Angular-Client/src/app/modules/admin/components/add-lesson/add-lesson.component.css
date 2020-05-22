@@ -1,0 +1,12 @@
+form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+form button, mat-form-field {
+    height: fit-content;
+}
+section button {
+    margin-top: 10px;
+}

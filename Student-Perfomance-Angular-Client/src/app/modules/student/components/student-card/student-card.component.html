@@ -1,0 +1,15 @@
+<mat-card class="example-card" *ngIf="student">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+            <i class="fas fa-user-graduate"></i>
+        </div>
+        <a routerLink="/students/{{student.id}}">
+            <mat-card-title>{{student.user.lastName + ' ' + student.user.firstName[0] + '.'}}</mat-card-title>
+            <mat-card-subtitle>{{student.user.email}}</mat-card-subtitle>
+        </a>
+    </mat-card-header>
+    <mat-card-content>
+        <p *ngIf="student.group"><strong>Group:</strong><a routerLink="/groups/{{student.group.id}}"> {{student.group.title}}</a></p>
+        <p *ngIf="avgMark"><strong>Average mark:</strong> {{avgMark}}</p>
+    </mat-card-content>
+</mat-card>

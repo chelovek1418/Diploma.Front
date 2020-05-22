@@ -1,0 +1,38 @@
+<section *ngIf="lesson">
+    <div class="group-list-header-container">
+        <h3>Groups subscribed on this lesson:</h3>
+        <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
+            type="button">Add group</button>
+    </div>
+    <mat-list>
+        <div *ngFor="let group of groups">
+            <mat-list-item>
+                <div class="group-container">
+                    <a routerLink="/groups/{{group.id}}">{{group.title}}</a>
+                    <button mat-icon-button color="warn" type="button" (click)="dropGroup(group)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <ng-template #searchForm>
+        <form>
+            <mat-form-field color="accent">
+                <input type="text" #searchBox placeholder="Group name" matInput [(ngModel)]="term" name="term"
+                    (input)="searchGroup(searchBox.value)" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let group of foundGroups$ | async" [value]="group.title">
+                        <div class="just-betw-container">
+                            <a routerLink="lessons/{{group.id}}">{{group.title}}</a>
+                            <button type="button" mat-icon-button color="accent" (click)="addGroup(group)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
+        </form>
+    </ng-template>
+</section>

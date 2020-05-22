@@ -1,0 +1,17 @@
+<section *ngIf="groups">
+  <div class="group-list-header-container">
+    <h3>All groups</h3>
+    <a mat-stroked-button routerLink="/groups/add" color="accent">Create group</a>
+  </div>
+  <mat-list>
+    <div *ngFor="let group of paginatedGroups">
+      <mat-list-item>
+        <a routerLink="/groups/{{group.id}}">{{group.title}}</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </div>
+  </mat-list>
+  <mat-paginator color="accent" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="pageEvent = $event">
+  </mat-paginator>
+</section>

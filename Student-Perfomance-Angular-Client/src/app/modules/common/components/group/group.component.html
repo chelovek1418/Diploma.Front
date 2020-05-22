@@ -1,0 +1,71 @@
+<section *ngIf="group">
+    <div class="entity-header">
+        <div class="entity-avatar">
+            <i class="fas fa-users fa-3x"></i>
+        </div>
+        <div class="header-info">
+            <div class="header-info-block">
+                <h4>{{group.title + ' (' + group.faculty + ' faculty)'}}</h4>
+            </div>
+            <div class="header-info-block">
+                <p>Speciality: <em>{{group.speciality}}</em></p>
+            </div>
+            <div class="header-info-block">
+                <p *ngIf="group.specialization">Specialization: <em>{{group.specialization}}</em></p>
+            </div>
+            <div class="header-info-block">
+                <p>Curator: <a *ngIf="group.curator" routerLink="/teachers/{{group.curator.id}}">
+                        {{group.curator.user.lastName + (group.curator.user.patronymic ? ' ' + group.curator.user.patronymic[0] : '') + ' ' + group.curator.user.firstName[0]}}</a>
+                    <span *ngIf="group.curator === null">-</span>
+                </p>
+            </div>
+            <div class="header-info-block">
+                <p>Headmen: <a *ngIf="group.headmen" routerLink="/students/{{group.headmen.id}}">
+                        {{group.headmen.user.lastName + ' ' + group.headmen.user.firstName}}</a>
+                    <span *ngIf="group.headmen === null">-</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <mat-tab-group mat-stretch-tabs color="accent">
+        <mat-tab label="Statistic">
+            <div class="tab-container">
+                STATISTIC
+            </div>
+        </mat-tab>
+        <mat-tab label="Students">
+            <div class="tab-container">
+                <app-group-students [group]="group"></app-group-students>
+            </div>
+        </mat-tab>
+        <mat-tab label="Schedule">
+            <div class="tab-container">
+                <app-schedule (selectedDetail)="selectedDetails = $event" [group]="group"></app-schedule>
+                <div class="invisible-divider"></div>
+                <mat-accordion *ngIf="selectedDetails">
+                    <mat-expansion-panel *ngFor="let detail of selectedDetails">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <a routerLink="/lessons/{{detail.subject?.id}}">
+                                    {{detail.subject?.title}}
+                                </a>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-detail-info [detail]="detail"></app-detail-info>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </div>
+        </mat-tab>
+        <mat-tab label="Lessons">
+            <div class="tab-container">
+                <app-group-lessons [group]="group"></app-group-lessons>
+            </div>
+        </mat-tab>
+        <mat-tab label="Settings">
+            <div class="tab-container">
+                <app-group-settings (settingsChanged)="getGroup()" [group]="group"></app-group-settings>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>

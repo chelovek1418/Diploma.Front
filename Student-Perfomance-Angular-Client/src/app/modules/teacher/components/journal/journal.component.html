@@ -1,0 +1,56 @@
+<section>
+    <form class="d-flex flex-wrap">
+        <mat-form-field>
+            <mat-label>Lesson</mat-label>
+            <mat-select [(value)]="selectedLesson">
+                <mat-option *ngFor="let lesson of lessons" [value]="lesson">
+                    {{lesson.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Group</mat-label>
+            <mat-select [(value)]="selectedGroup">
+                <mat-option *ngFor="let group of groups" [value]="group">
+                    {{group.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Month</mat-label>
+            <mat-select [(value)]="selectedMonth">
+                <mat-option *ngFor="let month of monthes" [value]="month">
+                    {{month | date:'MMMM'}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</section>
+<app-group-marks (selectedStudent)="onStudentSelecting($event)" [groupId]="selectedGroup?.id"
+    [lessonId]="selectedLesson?.id" [month]="selectedMonth"></app-group-marks>
+<section class="stat" *ngIf="selectedLesson && selectedGroup">
+    <mat-accordion>
+        <mat-expansion-panel *ngIf="selectedStudent">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="fas fa-user-graduate"></i>
+                </mat-panel-title>
+                <mat-panel-description>
+                    Student stat
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-stat-by-lesson [lesson]="selectedLesson" [student]="selectedStudent"></app-stat-by-lesson>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <i class="fas fa-users"></i>
+                </mat-panel-title>
+                <mat-panel-description>
+                    Group stat
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-stat-by-lesson-group [group]="selectedGroup" [lesson]="selectedLesson"></app-stat-by-lesson-group>
+        </mat-expansion-panel>
+    </mat-accordion>
+</section>

@@ -1,0 +1,50 @@
+table {
+    width: 100%;
+}
+th.mat-sort-header-sorted {
+    color: black;
+}
+.example-container {
+    height: auto;
+    overflow: auto;
+    border-radius: 4px;
+}
+tr.student-marks:hover{
+    background-color: gray;
+}
+td.student-mark:hover{
+    background-color: #afafaf;
+}
+tr.mat-row {
+    height: 30px;
+}
+td.mat-cell:not(:first-child) {
+    text-align: center;
+}
+.mat-header-cell:not(:first-child) {
+    text-align: center;
+    min-width: 30px;
+}
+.editable{
+    height: 30px!important;
+    justify-content: center;
+}
+.outlet{
+    opacity: 0.5;
+    background: #1b1b1b;
+}
+.mark-input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: white;
+    min-width: 80px;
+}
+.mark-input:focus{
+    outline: none;
+    box-shadow: none;
+    border-color: white;
+}
+tr td:first-child{
+    cursor: pointer;
+}

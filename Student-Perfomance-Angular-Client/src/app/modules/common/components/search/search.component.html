@@ -1,0 +1,6 @@
+<mat-form-field>
+    <input matInput type="text" placeholder="Search" [(ngModel)]="searchValue">
+    <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="searchValue=''">
+        <i class="fas fa-times"></i>
+    </button>
+</mat-form-field>

@@ -1,0 +1,35 @@
+.student-block {
+    border: 1px gray solid;
+    border-radius: 2px;
+}
+.student-header {
+    display: flex;
+    background-color: #212121;
+    height: 80px;
+    border-bottom: 1px gray solid;
+}
+.student-avatar {
+    width: 80px;
+    background-color: #3a3a3a;
+    border-radius: 2px;
+    margin-right: 20px;
+    display: flex;
+    flex: none;
+    justify-content: center;
+}
+i {
+  align-self: center;
+}
+.header-info {
+    display: grid;
+    width: 100%;
+}
+.header-info h4, p {
+    margin-bottom: 5px;
+}
+.tab-container {
+    padding: 15px;
+}
+.stat-by-lesson-container {
+    margin-top: 20px;
+}

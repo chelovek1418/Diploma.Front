@@ -1,0 +1,13 @@
+section {
+    border: 1px gray solid;
+    border-radius: 2px;
+}
+mat-tab-group {
+    border-top: 1px gray solid;
+}
+.tab-container {
+    padding: 15px;
+}
+.header-container {
+    margin: 15px;
+}

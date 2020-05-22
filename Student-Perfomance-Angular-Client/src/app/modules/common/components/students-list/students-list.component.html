@@ -1,0 +1,15 @@
+<section *ngIf="students">
+    <h3>All students</h3>
+    <mat-list>
+        <div *ngFor="let student of paginatedStudents">
+            <mat-list-item>
+                <a
+                    routerLink="/students/{{student.id}}">{{student.user.firstName + ' ' + student.user.lastName}}</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <mat-paginator color="accent" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
+    </mat-paginator>
+</section>

@@ -1,0 +1,25 @@
+mat-header-cell {
+    display: flex;
+    justify-content: center;
+}
+mat-cell:hover {
+    background-color: #67b58a;
+    cursor: pointer;
+}
+mat-cell div {
+    width: 100%;
+    padding: 0 5px;
+}
+.numerator {
+    border-bottom: 1px white solid;
+    height: 50%;
+}
+.denominator {
+    border-top: 1px white solid;
+    height: 50%;
+}
+.divided-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}

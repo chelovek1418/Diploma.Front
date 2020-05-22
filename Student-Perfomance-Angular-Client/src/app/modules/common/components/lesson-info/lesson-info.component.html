@@ -1,0 +1,25 @@
+<section *ngIf="lesson">
+    <h3 class="header-container">{{lesson.title}}</h3>
+    <mat-tab-group mat-stretch-tabs color="accent">
+        <mat-tab label="Statistic">
+            <div class="tab-container">
+                <app-lesson-stat [lesson]="lesson"></app-lesson-stat>
+            </div>
+        </mat-tab>
+        <mat-tab label="Groups">
+            <div class="tab-container">
+                <app-lesson-groups [lesson]="lesson"></app-lesson-groups>
+            </div>
+        </mat-tab>
+        <mat-tab label="Teachers">
+            <div class="tab-container">
+                <app-lesson-teachers></app-lesson-teachers>
+            </div>
+        </mat-tab>
+        <mat-tab label="Settings">
+            <div class="tab-container">
+                <app-lesson-settings (settingsChanged)="getLesson()" [lesson]="lesson"></app-lesson-settings>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>

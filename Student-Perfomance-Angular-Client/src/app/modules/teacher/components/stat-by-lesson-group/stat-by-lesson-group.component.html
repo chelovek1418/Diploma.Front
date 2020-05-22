@@ -1,0 +1,8 @@
+<div *ngIf="group && lesson">
+    <h4>{{group.title + ' ' + lesson.title}}</h4>
+    <p *ngIf="avgMark"><strong>Average rating in the group</strong>: {{avgMark}}</p>
+    <p *ngIf="bestStudent"><strong>Student with top grades in {{lesson.title}} in group {{group.title}}</strong>:
+        <a routerLink="/student/{{bestStudent.id}}">{{bestStudent.user.firstName + ' ' + bestStudent.user.lastName}}</a></p>
+    <p *ngIf="worstStudent"><strong>Student with worst grades in {{lesson.title}} in group {{group.title}}</strong>:
+        <a routerLink="/student/{{worstStudent.id}}">{{worstStudent.user.firstName + ' ' + worstStudent.user.lastName}}</a></p>
+</div>

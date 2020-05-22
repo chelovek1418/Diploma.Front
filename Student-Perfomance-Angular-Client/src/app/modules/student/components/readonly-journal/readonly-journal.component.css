@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+}
+.table-container {
+    height: auto;
+    overflow: auto;
+    border-radius: 4px;
+    max-height: 450px;
+}
+th:last-child, th:first-child {
+    padding: 0 0 0 10px!important;
+}
+td.mat-cell:not(:first-child) {
+    text-align: center;
+}
+tr td:first-child{
+    cursor: pointer;
+    padding: 0 10px;
+}
+th.mat-header-cell:not(:first-child) {
+    text-align: center;
+    min-width: 30px;
+}
+.mat-input-element:disabled {
+    color: white;
+}
+tr.student-marks {
+    height: 30px;
+}
+tr.student-marks:hover {
+    background-color: gray;
+}
+td.student-mark:hover{
+    background-color: #afafaf;
+}
+
+tr td:not(:last-child) {
+    border-width: 0 1px 1px 0;
+    border-color: #595959;
+    border-style: solid;
+}
+td.future {
+    background-color: #4a2d2d!important;
+}
+td.outlet{
+    opacity: 0.5;
+    background: #1b1b1b!important;
+}

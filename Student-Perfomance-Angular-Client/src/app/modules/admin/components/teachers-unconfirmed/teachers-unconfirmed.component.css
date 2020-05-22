@@ -1,0 +1,10 @@
+mat-paginator {
+    margin-top: 15px;
+}
+.expansion-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.expansion-container div {
+    margin: 0 10px;
+}

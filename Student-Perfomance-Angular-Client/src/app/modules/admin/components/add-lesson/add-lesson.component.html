@@ -1,0 +1,44 @@
+<!-- <div>
+    <form [formGroup]="createLessonForm" novalidate (ngSubmit)="createLesson()">
+        <label for="title">Lesson title:</label>
+        <input id="title" type="text" formControlName="title" />
+        <div *ngIf="title.pending">Validating...</div>
+        <div *ngIf="title.invalid && (title.dirty || title.touched)">
+            <div *ngIf="title.errors.uniqueTitle">
+                This title is already taken
+            </div>
+            <div *ngIf="title.errors.required">
+                Title is required.
+            </div>
+            <div *ngIf="title.errors.minlength">
+                Title must be at least 2 characters long.
+            </div>
+            <div *ngIf="title.errors.maxlength">
+                Title must be less then 30 characters long.
+            </div>
+        </div>
+        <button type="submit" [disabled]="createLessonForm.invalid">
+            Create lesson
+        </button>
+    </form>
+    <a routerLink="/lessons">Cancel</a>    
+</div> -->
+<section>
+    <h3>Create lesson</h3>
+    <form [formGroup]="createLessonForm" novalidate (ngSubmit)="createLesson()">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label>Lesson title</mat-label>
+            <input #input matInput maxlength="50" placeholder="Math" type="text" formControlName="title">
+            <mat-error *ngIf="title.invalid && title.touched">
+                <div *ngIf="title.errors.uniqueTitle">This title is already taken</div>
+                <div *ngIf="title.errors.required">Title is required</div>
+                <div *ngIf="title.errors.minlength">Title must be at least 2 characters long</div>
+                <div *ngIf="title.errors.maxlength">Title must be less then 50 characters long</div>
+            </mat-error>
+            <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
+          </mat-form-field>
+        <div *ngIf="title.pending">Validating...</div>
+        <button mat-stroked-button color="accent" type="submit" [disabled]="createLessonForm.invalid">Create lesson</button>
+    </form>
+    <a mat-stroked-button color="warn" routerLink="/lessons">Cancel</a>
+</section>

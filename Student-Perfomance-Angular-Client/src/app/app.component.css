@@ -1,0 +1,37 @@
+.spacer{
+  flex: 1 1 auto;
+}
+mat-toolbar-row app-search {
+  margin-right: 15px;
+}
+mat-toolbar-row a {
+  margin-left: 8px;
+}
+mat-sidenav-content {
+  flex: 1 1 auto;
+  padding: 20px;
+  background-color: #303030;
+  color: white;
+}
+.app-main-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.is-mobile header .toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.is-mobile .sidenav-container {
+  flex: 1 0 auto;
+}

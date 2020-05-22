@@ -1,0 +1,29 @@
+<div class="app-main-container" [class.is-mobile]="mobileQuery.matches">
+    <header>
+        <mat-toolbar class="toolbar">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="snav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <a routerLink="/dashboard">
+                    <h1><i class="fas fa-graduation-cap"></i>{{title}}</h1>
+                </a>
+                <span class="spacer"></span>
+                <app-search></app-search>
+                <app-login-header></app-login-header>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </header>
+
+    <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+            fixedTopGap="56">
+            <app-general-navigation></app-general-navigation>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+</div>

@@ -1,0 +1,17 @@
+<section *ngIf="lessons">
+    <div class="lesson-list-header-container">
+        <h3>Lesson list</h3>
+        <a mat-stroked-button routerLink="/lessons/add-lesson" color="accent">Create lesson</a>
+    </div>
+    <mat-list>
+        <div *ngFor="let lesson of paginatedLessons">
+            <mat-list-item>
+                <a routerLink="/lessons/{{lesson.id}}">{{lesson.title}}</a>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <mat-paginator color="accent" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event">
+    </mat-paginator>
+</section>

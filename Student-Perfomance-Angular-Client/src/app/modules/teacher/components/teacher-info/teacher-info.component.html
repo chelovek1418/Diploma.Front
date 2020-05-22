@@ -1,0 +1,58 @@
+<section *ngIf="teacher" class="user-block">
+    <div class="block-header">
+        <div class="user-avatar">
+            <i class="fas fa-user-tie fa-3x"></i>
+        </div>
+        <div class="header-info">
+            <h4>{{teacher.user.firstName + ' ' + teacher.user.lastName + ' ' + (teacher.user.patronymic ? teacher.user.patronymic : '')}}</h4>
+            <p><em>{{teacher.user.email}}</em></p>
+            <p>Position: <em>{{teacher.position}}</em></p>
+        </div>
+    </div>
+    <mat-tab-group mat-stretch-tabs color="accent">
+        <mat-tab label="General">
+            <div class="tab-container">
+                <p>{{'First Name: ' + teacher.user.firstName}}</p>
+                <p>{{'Last Name: ' + teacher.user.lastName}}</p>
+                <p *ngIf="teacher.user.patronymic">{{'Patronymic: ' + teacher.user.patronymic}}</p>
+                <p>{{'Email: ' + teacher.user.email}}</p>
+                <p>{{'Phone: ' + teacher.user.phoneNumber}}</p>
+                <p>{{'Department: ' + teacher.user.department}}</p>
+                <p>{{'Position: ' + teacher.position}}</p>
+            </div>
+        </mat-tab>
+        <mat-tab label="Statistic">
+            <div class="tab-container">
+                STATISTIC
+            </div>
+        </mat-tab>
+        <mat-tab label="Schedule">
+            <div class="tab-container">
+                <app-teacher-schedule (selectedDayPair)="selectedDayPair = $event" [teacher]="teacher"></app-teacher-schedule>
+                <div class="invisible-divider"></div>
+                <!-- <mat-accordion *ngIf="selectedDayPair">
+                    <mat-expansion-panel *ngFor="let detail of selectedDetails">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <a routerLink="/lessons/{{detail.subject?.id}}">
+                                    {{detail.subject?.title}}
+                                </a>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-detail-info [detail]="detail"></app-detail-info>
+                    </mat-expansion-panel>
+                </mat-accordion> -->
+                </div>
+        </mat-tab>
+        <mat-tab label="Lessons">
+            <!-- <div class="tab-container">
+                <app-group-lessons [group]="group"></app-group-lessons>
+            </div> -->
+        </mat-tab>
+        <mat-tab label="Settings">
+            <!-- <div class="tab-container">
+                <app-group-settings (settingsChanged)="getGroup()" [group]="group"></app-group-settings>
+            </div> -->
+        </mat-tab>
+    </mat-tab-group>
+</section>

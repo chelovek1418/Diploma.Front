@@ -1,0 +1,40 @@
+<section *ngIf="group">
+    <div class="header-container">
+        <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
+            type="button">Add student</button>
+    </div>
+    <mat-list>
+        <div *ngFor="let student of group.students">
+            <mat-list-item>
+                <div class="group-container">
+                    <a routerLink="/students/{{student.id}}">
+                        {{student.user.firstName}} {{student.user.lastName}}
+                    </a>
+                    <button mat-icon-button color="warn" type="button" (click)="dropStudent(student)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <ng-template #searchForm>
+        <form>
+            <mat-form-field color="accent">
+                <input type="text" #searchBox placeholder="Student" matInput [(ngModel)]="term" name="term"
+                    (input)="searchStudent(searchBox.value)" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let student of foundStudents$ | async" [value]="student.user.lastName">
+                        <div class="just-betw-container">
+                            <a
+                                routerLink="student/{{student.id}}">{{student.user.firstName + ' ' + student.user.lastName}}</a>
+                            <button type="button" mat-icon-button color="accent" (click)="addStudent(student)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
+        </form>
+    </ng-template>
+</section>

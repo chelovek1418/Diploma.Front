@@ -1,0 +1,26 @@
+<mat-card class="example-card" *ngIf="group">
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+            <i class="fas fa-users"></i>
+        </div>
+        <a routerLink="/groups/{{group.id}}">
+            <mat-card-title>{{group.title + ' (' + group.faculty + ' facullty)'}}</mat-card-title>
+            <mat-card-subtitle>{{group.speciality}}</mat-card-subtitle>
+        </a>
+    </mat-card-header>
+    <mat-card-content>
+        <p *ngIf="group.specialization">Specialization: <em>{{group.specialization}}</em></p>
+        <p>Year of study: <em>{{group.year}}</em></p>
+        <p>Headmen: <a *ngIf="group.headmen; else noHeadmen"
+                routerLink="/students/{{group.headmen.id}}">{{group.headmen.user.lastName + ' ' + group.headmen.user.firstName}}</a>
+        </p>
+        <ng-template #noHeadmen>-</ng-template>
+        <p>Curator: <span *ngIf="group.curator; else noCurator">{{group.curator.position + ' '}}
+                <a
+                    routerLink="/teachers/{{group.curator.id}}">{{group.curator.user.lastName + ' ' + (group.curator.user.patronymic ? group.curator.user.patronymic[0] + '. ' : '') + group.curator.user.firstName[0] + '.'}}</a>
+            </span></p>
+        <ng-template #noCurator>-</ng-template>
+        <p *ngIf="group.students">Number of students: <em>{{group.students.length}}</em></p>
+        <p>Average mark: <em>4.2</em>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,58 @@
+<section class="student-block" *ngIf="student">
+    <div class="student-header">
+        <div class="student-avatar">
+            <i class="fas fa-user-graduate fa-3x"></i>
+        </div>
+        <div class="header-info">
+            <h4>{{student.user.firstName + ' ' + student.user.lastName + ' ' + (student.user.patronymic ? student.user.patronymic : '')}}</h4>
+            <p><em>{{student.user.email}}</em></p>
+            <p *ngIf="student.group"><a routerLink="/groups/{{student.group.id}}">{{student.group.title}}</a></p>
+        </div>
+    </div>
+    <mat-tab-group mat-stretch-tabs color="accent" *ngIf="student">
+        <mat-tab label="General">
+            <div class="tab-container">
+                <p>{{'First Name: ' + student.user.firstName}}</p>
+                <p>{{'Last Name: ' + student.user.lastName}}</p>
+                <p *ngIf="student.user.patronymic">{{'Patronymic: ' + student.user.patronymic}}</p>
+                <p>{{'Email: ' + student.user.email}}</p>
+                <p>{{'Phone: ' + student.user.phoneNumber}}</p>
+                <p>{{'Department: ' + student.user.department}}</p>
+                <p>Group: <a *ngIf="student.group; else noGroup" routerLink="/groups/{{student.group.id}}">{{student.group.title}}</a>
+                    <ng-template #noGroup>-</ng-template>
+                </p>
+            </div>
+        </mat-tab>
+        <mat-tab label="Stat">
+            <div class="tab-container">
+                <app-student-stat [student]="student"></app-student-stat>
+            </div>
+        </mat-tab>
+        <mat-tab label="Journal">
+            <div class="tab-container">
+                <app-readonly-journal (selectedLesson)="onLessonSelecting($event)" [student]="student">
+                </app-readonly-journal>
+                <div *ngIf="selectedLesson" class="stat-by-lesson-container">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <i class="fas fa-user-graduate"></i>
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Student stat
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-stat-by-lesson [student]="student" [lesson]="selectedLesson"></app-stat-by-lesson>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Settings">
+            <div class="tab-container">
+                <app-student-settings (settingsChanged)="getStudent()" [student]="student"></app-student-settings>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</section>

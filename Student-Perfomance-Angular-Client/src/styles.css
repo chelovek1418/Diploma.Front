@@ -1,0 +1,17 @@
+html, body { 
+  height: 100%;
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+app-root {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+a {
+  color: #69f0ae;
+}
+a:hover {
+  text-decoration: none;
+  color: #40946b;
+}

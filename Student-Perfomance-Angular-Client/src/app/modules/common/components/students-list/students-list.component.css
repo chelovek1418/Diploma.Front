@@ -1,0 +1,11 @@
+mat-paginator {
+    margin-top: 15px;
+}
+.list-header-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.list-header-container a {
+    height: fit-content;
+}

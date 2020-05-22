@@ -1,0 +1,16 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+form > mat-form-field, button {
+    width: fit-content;
+}
+.settings-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.delete-button-container {
+    align-self: flex-end;
+    padding-top: 15px;
+}

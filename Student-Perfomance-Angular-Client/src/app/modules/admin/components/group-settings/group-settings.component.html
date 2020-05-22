@@ -1,0 +1,94 @@
+<div class="settings-container" *ngIf="group">
+    <form [formGroup]="updateForm" novalidate (ngSubmit)="updateGroup()">
+        <div class="fields-container">
+            <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="123a" #input maxlength="20" type="text" formControlName="title" required>
+                <div *ngIf="title.pending">Validating...</div>
+                <mat-error *ngIf="title.touched && title.dirty && title.invalid">
+                    <div *ngIf="title.errors.uniqueTitle">This title is already taken</div>
+                    <div *ngIf="title.errors.required">Title is required</div>
+                    <div *ngIf="title.errors.minlength">Title must be at least 2 characters long</div>
+                    <div *ngIf="title.errors.maxlength">Title must be less then 20 characters long</div>
+                </mat-error>
+                <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Education year</mat-label>
+                <input matInput placeholder="1" maxlength="1" max="6" min="1" type="number" formControlName="year"
+                    required>
+                <mat-error *ngIf="updateForm.controls['year'].invalid && updateForm.controls['year'].dirty">
+                    <div *ngIf="updateForm.controls['year'].errors.required">Year is required</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                <mat-label>Faculty</mat-label>
+                <input matInput placeholder="5" maxlength="20" type="text" formControlName="faculty" required>
+                <mat-error *ngIf="updateForm.controls['faculty'].invalid && updateForm.controls['faculty'].dirty">
+                    <div *ngIf="updateForm.controls['faculty'].errors.required">Faculty is required</div>
+                    <div *ngIf="updateForm.controls['faculty'].errors.minlength">Faculty length must be at least 1
+                        characters long</div>
+                    <div *ngIf="updateForm.controls['faculty'].errors.maxlength">Title must be less then 20 characters
+                        long
+                    </div>
+                </mat-error>
+                <mat-hint align="end">{{updateForm.controls['faculty'].value.length || 0}}/20</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Specilality</mat-label>
+                <input matInput placeholder="CS" maxlength="30" type="text" formControlName="speciality" required>
+                <mat-error *ngIf="updateForm.controls['speciality'].invalid && updateForm.controls['speciality'].dirty">
+                    <div *ngIf="updateForm.controls['speciality'].errors.required">Speciality is required</div>
+                    <div *ngIf="updateForm.controls['speciality'].errors.minlength">Speciality must be at least 2
+                        characters
+                        long</div>
+                    <div *ngIf="updateForm.controls['speciality'].errors.maxlength">Speciality must be less then 30
+                        characters long
+                    </div>
+                </mat-error>
+                <mat-hint align="end">{{updateForm.controls['speciality'].value.length || 0}}/30</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Specilalization</mat-label>
+                <input matInput placeholder="CS" maxlength="30" type="text" formControlName="specialization">
+                <mat-error
+                    *ngIf="updateForm.controls['specialization']?.invalid && updateForm.controls['specialization']?.dirty">
+                    <div *ngIf="updateForm.controls['specialization']?.errors.maxlength">Specilalization must be less
+                        then
+                        30 characters
+                        long</div>
+                </mat-error>
+                <mat-hint align="end">{{updateForm.controls['specialization']?.value.length || 0}}/30</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Headmen</mat-label>
+                <mat-select formControlName="headmen">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let stud of group.students" [value]="stud">
+                        {{stud.user.lastName +' '+ stud.user.firstName + ' (' + stud.user.email + ')' }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Curator</mat-label>
+                <mat-select formControlName="curator">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let stud of group.students" [value]="stud">
+                        {{stud.user.lastName +' '+ stud.user.firstName + ' (' + stud.user.email + ')' }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="action-buttons-container">
+            <button mat-stroked-button color="warn" (click)="delete()">Delete group</button>
+            <button mat-stroked-button color="accent" type="submit" [disabled]="updateForm.invalid || updateForm.pristine">Save</button>
+        </div>
+    </form>
+
+</div>

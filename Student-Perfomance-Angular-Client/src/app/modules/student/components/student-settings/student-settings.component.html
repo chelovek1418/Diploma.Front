@@ -1,0 +1,36 @@
+<section>
+    <h3>Profile info</h3>
+
+    <div *ngIf="student && groups">
+        <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()">
+            <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                <mat-label>First name</mat-label>
+                <input matInput placeholder="Ivan" #input maxlength="20" type="text" formControlName="firstName"
+                    required>
+                <mat-error *ngIf="updateForm.controls['firstName'].invalid && updateForm.controls['firstName'].dirty">
+                    First name is required</mat-error>
+                <mat-hint align="end">{{updateForm.controls['firstName'].value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                <mat-label>Last name</mat-label>
+                <input matInput placeholder="Khayovskiy" #input maxlength="20" type="text" formControlName="lastName"
+                    required>
+                <mat-error *ngIf="updateForm.controls['lastName'].invalid && updateForm.controls['lastName'].dirty">
+                    Last name is required</mat-error>
+                <mat-hint align="end">{{updateForm.controls['lastName'].value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="student@student.csn.khai.edu" #input maxlength="30" type="email"
+                    formControlName="email" required>
+                <mat-error *ngIf="updateForm.controls['email'].invalid && updateForm.controls['email'].dirty">
+                    Email is required</mat-error>
+                <mat-hint align="end">{{updateForm.controls['email'].value?.length || 0}}/30</mat-hint>
+            </mat-form-field>
+            <div class="action-buttons-container">
+                <button mat-stroked-button color="accent" type="submit"
+                    [disabled]="updateForm.invalid || updateForm.pristine">Save</button>
+            </div>
+        </form>
+    </div>
+</section>

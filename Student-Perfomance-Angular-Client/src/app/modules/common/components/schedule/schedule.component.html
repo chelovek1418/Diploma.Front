@@ -1,0 +1,26 @@
+<div *ngIf="details?.length > 0">
+    <mat-table [dataSource]="pairs">
+
+        <ng-container *ngFor="let day of displayedColumns; let i = index" matColumnDef="{{displayedColumns[i]}}">
+          <mat-header-cell *matHeaderCellDef> {{day | uppercase}} </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div *ngIf="havePair(element, i)" (click)="selectDetail(element, i)">
+              <div *ngIf="selectedDetails[0].isNumerator === null; else divided">
+                {{selectedDetails[0].subject?.title}}
+              </div>
+              <ng-template #divided class="divided-container">
+                <div [class.numerator]="selectedDetails[0].isNumerator" [class.denominator]="selectedDetails[0].isNumerator === false">
+                  {{selectedDetails[0].subject?.title}}
+                </div>
+                <div *ngIf="selectedDetails[1]" [class.numerator]="selectedDetails[1].isNumerator" [class.denominator]="selectedDetails[1].isNumerator === false">
+                  {{selectedDetails[1].subject?.title}}
+                </div>
+              </ng-template>
+            </div>
+          </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+</div>

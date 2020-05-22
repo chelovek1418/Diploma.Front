@@ -1,0 +1,40 @@
+<section *ngIf="group">
+    <div class="header-container">
+        <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
+            type="button">Add lesson</button>
+    </div>
+    <mat-list>
+        <div *ngFor="let lesson of lessons">
+            <mat-list-item>
+                <div class="group-container">
+                    <a routerLink="/lessons/{{lesson.id}}">
+                        {{lesson.title}}
+                    </a>
+                    <button mat-icon-button color="warn" type="button" (click)="dropLesson(lesson)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <ng-template #searchForm>
+        <form>
+            <mat-form-field color="accent">
+                <input type="text" #searchBox placeholder="Subject" matInput [(ngModel)]="term" name="term"
+                    (input)="searchLesson(searchBox.value)" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let lesson of foundLessons$ | async" [value]="lesson.title">
+                        <div class="just-betw-container">
+                            <a
+                                routerLink="lessons/{{lesson.id}}">{{lesson.title}}</a>
+                            <button type="button" mat-icon-button color="accent" (click)="addLesson(lesson)"><i
+                                    class="fas fa-plus"></i></button>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
+        </form>
+    </ng-template>
+</section>

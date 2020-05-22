@@ -1,0 +1,20 @@
+<div class="settings-container" *ngIf="lesson">
+    <form [formGroup]="updateForm" novalidate (ngSubmit)="renameLesson()">
+        <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Math" #input maxlength="30" type="text" formControlName="title" required>
+            <div *ngIf="title.pending">Validating...</div>
+            <mat-error *ngIf="title.invalid && title.dirty">
+                <div *ngIf="title.errors.uniqueTitle">This title is already taken</div>
+                <div *ngIf="title.errors.required">Title is required</div>
+                <div *ngIf="title.errors.minlength">Title must be at least 2 characters long</div>
+                <div *ngIf="title.errors.maxlength">Title must be less then 30 characters long</div>
+            </mat-error>
+            <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
+        </mat-form-field>
+        <button mat-stroked-button color="accent" type="submit" [disabled]="updateForm.invalid">Save</button>
+    </form>
+    <div class="delete-button-container">
+        <button mat-stroked-button color="warn" (click)="delete()">Delete lesson</button>
+    </div>
+</div>
