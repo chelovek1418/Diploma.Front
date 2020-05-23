@@ -4,13 +4,14 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { Rating } from 'src/app/modules/common/models/interfaces/rating';
 import { Mark } from 'src/app/modules/common/models/interfaces/mark';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarkService {
   
-  private readonly apiUrl: string = 'https://localhost:44322/api/marks';
+  private readonly apiUrl: string = `${environment.apiUrl}/marks`;
   
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

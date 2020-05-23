@@ -5,6 +5,9 @@ import { GroupService } from 'src/app/services/group/group.service';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Student } from 'src/app/modules/common/models/interfaces/student';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonDialogComponent } from 'src/app/modules/common/components/common-dialog/common-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-settings',
@@ -25,10 +28,14 @@ export class StudentSettingsComponent implements OnInit, OnChanges, OnDestroy {
 
   private groupSub: Subscription;
   private studentUpdateSub: Subscription;
+  private dialogSub: Subscription;
+  private deleteStudSub: Subscription;
 
   constructor(fb: FormBuilder,
+    private dialog: MatDialog,
     private groupService: GroupService,
-    private studentService: StudentService) {
+    private studentService: StudentService,
+    private router: Router) {
 
     this.updateForm = fb.group({
       firstName: ["", [Validators.required, Validators.maxLength(20)]],
@@ -54,6 +61,8 @@ export class StudentSettingsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.groupSub?.unsubscribe();
     this.studentUpdateSub?.unsubscribe();
+    this.dialogSub?.unsubscribe();
+    this.deleteStudSub?.unsubscribe();
   }
 
   getGroups(): void {
@@ -66,6 +75,19 @@ export class StudentSettingsComponent implements OnInit, OnChanges, OnDestroy {
     this.student.user.lastName = this.updateForm.controls['lastName'].value;
     this.student.user.email = this.updateForm.controls['email'].value;
     this.studentUpdateSub = this.studentService.updateStudent(this.student).subscribe(_ => this.settingsChanged.emit());
+  }
+
+  delete(): void {
+    const dialogRef = this.dialog.open(CommonDialogComponent, {
+      width: 'auto',
+      data: 'this account'
+    });
+
+    this.dialogSub = dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.deleteStudSub = this.studentService.delete(this.student.id).subscribe(_ => this.router.navigate(['/students']));
+      }
+    });
   }
 
 }

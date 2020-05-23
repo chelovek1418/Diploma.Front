@@ -4,12 +4,13 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Group } from 'src/app/modules/common/models/interfaces/group';
 import { GroupLesson } from 'src/app/modules/common/models/interfaces/groupLesson';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  private readonly apiUrl: string = 'https://localhost:44322/api/groups';
+  private readonly apiUrl: string = `${environment.apiUrl}/groups`;
   
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -21,6 +21,7 @@ import { StudentModule } from '../student/student.module';
 import { TeacherInfoComponent } from './components/teacher-info/teacher-info.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TeacherScheduleComponent } from './components/teacher-schedule/teacher-schedule.component';
+import { TeacherSettingsComponent } from './components/teacher-settings/teacher-settings.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { TeacherScheduleComponent } from './components/teacher-schedule/teacher-
         EditModeDirective,
         FocusableDirective,
         TeacherInfoComponent,
-        TeacherScheduleComponent
+        TeacherScheduleComponent,
+        TeacherSettingsComponent
     ],
     exports: []
 })

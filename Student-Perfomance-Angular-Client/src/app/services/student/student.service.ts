@@ -3,13 +3,14 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Student } from 'src/app/modules/common/models/interfaces/student';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
-  private readonly apiUrl: string = 'https://localhost:44322/api/students';
+  private readonly apiUrl: string = `${environment.apiUrl}/students`;
   
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -71,14 +72,12 @@ export class StudentService {
     );
   }
 
-  // deleteUser (userId: number): Observable<User> {
-  //   const url = `${this.apiUrl}${this.usersUrl}/${userId}`;
-  
-  //   return this.http.delete<User>(url, this.httpOptions).pipe(
-  //     tap(_ => this.log(`deleted user id=${userId}`)),
-  //     catchError(this.handleError<User>('deleteUser'))
-  //   );
-  // }
+  delete (id: number): Observable<Student> {
+    const url = `${this.apiUrl}/${id}`;  
+    return this.http.delete<Student>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Student>('delete'))
+    );
+  }
 
   searchStudents(term: string): Observable<Student[]> {
     if (!term.trim()) {
