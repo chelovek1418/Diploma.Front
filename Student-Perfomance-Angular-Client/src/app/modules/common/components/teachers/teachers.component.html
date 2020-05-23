@@ -7,7 +7,7 @@
         <div *ngFor="let teach of paginatedTeachers">
             <mat-list-item>
                 <a
-                    routerLink="/teachers/{{teach.id}}">{{teach.position + ' ' + teach.user.firstName + ' ' + teach.user.lastName + ' ' + teach.user.patronymic}}</a>
+                    routerLink="/teachers/{{teach.id}}">{{teach.position + ' ' + teach.user.firstName + ' ' + teach.user.lastName + (teach.user.patronymic ? ' ' + teach.user.patronymic : '')}}</a>
             </mat-list-item>
             <mat-divider></mat-divider>
         </div>

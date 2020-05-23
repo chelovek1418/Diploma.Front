@@ -3,13 +3,14 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Lesson } from 'src/app/modules/common/models/interfaces/lesson';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LessonService {
 
-  private readonly apiUrl: string = 'https://localhost:44322/api/lessons';
+  private readonly apiUrl: string = `${environment.apiUrl}/lessons`;
   
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

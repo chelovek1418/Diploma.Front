@@ -3,13 +3,14 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Teacher } from 'src/app/modules/common/models/interfaces/teacher';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
 
-  private readonly apiUrl: string = 'https://localhost:44322/api/teachers';
+  private readonly apiUrl: string = `${environment.apiUrl}/teachers`;
   
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -32,6 +33,13 @@ export class TeacherService {
   get(id: number): Observable<Teacher> {
     return this.http.get<Teacher>(`${this.apiUrl}/${id}`).pipe(
       catchError(this.handleError<Teacher>('get'))
+    );
+  }
+
+  update(teacher: Teacher): Observable<any> {
+    const url = `${this.apiUrl}/${teacher.id}`;
+    return this.http.put(url, teacher, this.httpOptions).pipe(
+      catchError(this.handleError<any>('update'))
     );
   }
 
