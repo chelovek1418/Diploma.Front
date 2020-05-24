@@ -1,19 +1,76 @@
 <section>
     <h3>Create group</h3>
     <form [formGroup]="createGroupForm" novalidate (ngSubmit)="createGroup()">
-        <mat-form-field appearance="outline" color="accent">
-            <mat-label>Group title</mat-label>
-            <input #input matInput maxlength="20" placeholder="123a" type="text" formControlName="title">
-            <mat-error *ngIf="title.invalid && title.touched">
-                <div *ngIf="title.errors.uniqueTitle">This title is already taken</div>
-                <div *ngIf="title.errors.required">Title is required</div>
-                <div *ngIf="title.errors.minlength">Title must be at least 2 characters long</div>
-                <div *ngIf="title.errors.maxlength">Title must be less then 20 characters long</div>
-            </mat-error>
-            <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
-          </mat-form-field>
-        <div *ngIf="title.pending">Validating...</div>
-        <button mat-stroked-button color="accent" type="submit" [disabled]="createGroupForm.invalid">Create group</button>
+        <div class="fields-container">
+            <mat-form-field appearance="outline" color="accent">
+                <mat-label>Group title</mat-label>
+                <input #input matInput maxlength="20" placeholder="123a" type="text" formControlName="title">
+                <mat-error *ngIf="createGroupForm.controls['title'].invalid && createGroupForm.controls['title'].touched">
+                    <div *ngIf="createGroupForm.controls['title'].errors.uniqueTitle">This title is already taken</div>
+                    <div *ngIf="createGroupForm.controls['title'].errors.required">Title is required</div>
+                    <div *ngIf="createGroupForm.controls['title'].errors.minlength">Title must be at least 2 characters long</div>
+                    <div *ngIf="createGroupForm.controls['title'].errors.maxlength">Title must be less then 20 characters long</div>
+                </mat-error>
+                <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+            </mat-form-field>
+            <!-- <div *ngIf="title.pending">Validating...</div> -->
+
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Education year</mat-label>
+                <input matInput placeholder="1" maxlength="1" max="6" min="1" type="number" formControlName="year"
+                    required>
+                <mat-error *ngIf="createGroupForm.controls['year'].invalid && createGroupForm.controls['year'].touched">
+                    <div *ngIf="createGroupForm.controls['year'].errors.required">Year is required</div>
+                    <div *ngIf="createGroupForm.controls['year'].errors.min">Min value is 1</div>
+                    <div *ngIf="createGroupForm.controls['year'].errors.max">Max value is 6</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                <mat-label>Faculty</mat-label>
+                <input matInput placeholder="5" maxlength="20" type="text" formControlName="faculty" required>
+                <mat-error *ngIf="createGroupForm.controls['faculty'].invalid && createGroupForm.controls['faculty'].touched">
+                    <div *ngIf="createGroupForm.controls['faculty'].errors.required">Faculty is required</div>
+                    <div *ngIf="createGroupForm.controls['faculty'].errors.minlength">Faculty length must be at least 1
+                        characters long</div>
+                    <div *ngIf="createGroupForm.controls['faculty'].errors.maxlength">Title must be less then 20 characters
+                        long
+                    </div>
+                </mat-error>
+                <mat-hint align="end">{{createGroupForm.controls['faculty'].value.length || 0}}/20</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Specilality</mat-label>
+                <input matInput placeholder="CS" maxlength="30" type="text" formControlName="speciality" required>
+                <mat-error *ngIf="createGroupForm.controls['speciality'].invalid && createGroupForm.controls['speciality'].touched">
+                    <div *ngIf="createGroupForm.controls['speciality'].errors.required">Speciality is required</div>
+                    <div *ngIf="createGroupForm.controls['speciality'].errors.minlength">Speciality must be at least 2
+                        characters
+                        long</div>
+                    <div *ngIf="createGroupForm.controls['speciality'].errors.maxlength">Speciality must be less then 30
+                        characters long
+                    </div>
+                </mat-error>
+                <mat-hint align="end">{{createGroupForm.controls['speciality'].value.length || 0}}/30</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Specilalization</mat-label>
+                <input matInput maxlength="30" type="text" formControlName="specialization">
+                <mat-error
+                    *ngIf="createGroupForm.controls['specialization']?.invalid && createGroupForm.controls['specialization']?.dirty">
+                    <div *ngIf="createGroupForm.controls['specialization']?.errors.maxlength">Specilalization must be less
+                        then 30 characters long</div>
+                </mat-error>
+                <mat-hint align="end">{{createGroupForm.controls['specialization']?.value.length || 0}}/30</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="action-buttons-container">
+            <a mat-stroked-button color="warn" routerLink="/groups">Cancel</a>
+            <button mat-stroked-button color="accent" type="submit" [disabled]="createGroupForm.invalid">Create
+                group</button>
+        </div>
+
     </form>
-    <a mat-stroked-button color="warn" routerLink="/groups">Cancel</a>
 </section>

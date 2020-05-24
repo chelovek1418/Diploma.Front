@@ -1,5 +1,14 @@
 <section *ngIf="lesson">
-    <h3 class="header-container">{{lesson.title}}</h3>
+    <div class="entity-header">
+        <div class="entity-avatar">
+            <i class="fas fa-book-open fa-3x"></i>
+        </div>
+        <div class="header-info">
+            <div class="header-info-block">
+                <h4>{{lesson.title}}</h4>
+            </div>
+        </div>
+    </div>
     <mat-tab-group mat-stretch-tabs color="accent">
         <mat-tab label="Statistic">
             <div class="tab-container">

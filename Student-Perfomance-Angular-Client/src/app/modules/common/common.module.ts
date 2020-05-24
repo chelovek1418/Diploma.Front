@@ -10,7 +10,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LessonsComponent } from './components/lessons/lessons.component';
 import { LessonInfoComponent } from './components/lesson-info/lesson-info.component';
 import { AdminModule } from '../admin/admin.module';
-import { LessonTeachersComponent } from './components/lesson-teachers/lesson-teachers.component';
 import { LessonGroupsComponent } from './components/lesson-groups/lesson-groups.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginHeaderComponent } from './components/login-header/login-header.component';
@@ -84,7 +83,6 @@ import { GroupCardComponent } from './components/group-card/group-card.component
         DashboardComponent,
         LessonsComponent,
         LessonInfoComponent,
-        LessonTeachersComponent,
         LessonGroupsComponent,
         LoginComponent,
         LoginHeaderComponent,

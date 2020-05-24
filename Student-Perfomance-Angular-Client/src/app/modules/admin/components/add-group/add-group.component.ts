@@ -18,8 +18,6 @@ export class AddGroupComponent implements OnDestroy {
 
   private createGroupSub: Subscription;
 
-  get title() { return this.createGroupForm.get('title'); }
-
   constructor(private groupService: GroupService,
     private titleValidator : GroupTitleValidator,
     private router : Router,
@@ -32,6 +30,10 @@ export class AddGroupComponent implements OnDestroy {
           asyncValidators: [this.titleValidator.validate.bind(this.titleValidator)],
           updateOn: 'blur'
          }],
+         faculty: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+         speciality: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+         specialization: ["", Validators.maxLength(30)],
+         year: ["", [Validators.required, Validators.min(1), Validators.max(6)]],
       });
    }
 

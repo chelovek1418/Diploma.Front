@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { LessonTeachersComponent } from './components/lesson-teachers/lesson-teachers.component';
 
 @NgModule({
     imports: [ 
@@ -33,7 +34,13 @@ import { MatSelectModule } from '@angular/material/select';
         MatExpansionModule,
         MatSelectModule,
     ],
-    declarations: [ AddGroupComponent, AddLessonComponent, LessonSettingsComponent, GroupSettingsComponent, TeachersUnconfirmedComponent ],
-    exports: [ LessonSettingsComponent, GroupSettingsComponent ]
+    declarations: [ AddGroupComponent,
+        AddLessonComponent,
+        LessonSettingsComponent,
+        GroupSettingsComponent,
+        TeachersUnconfirmedComponent,
+        LessonTeachersComponent,
+    ],
+    exports: [ LessonSettingsComponent, GroupSettingsComponent, LessonTeachersComponent ]
 })
 export class AdminModule { }

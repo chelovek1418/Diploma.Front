@@ -52,7 +52,7 @@
             <div *ngIf="isStudent === true">
                 <mat-form-field>
                     <mat-label>Group</mat-label>
-                    <mat-select required formControlName="group">
+                    <mat-select formControlName="group">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let gr of groups" [value]="gr">{{gr.title}}</mat-option>
                     </mat-select>
