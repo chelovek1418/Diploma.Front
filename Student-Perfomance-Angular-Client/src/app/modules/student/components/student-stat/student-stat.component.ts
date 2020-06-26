@@ -14,14 +14,14 @@ export class StudentStatComponent implements OnChanges, OnDestroy {
   @Input() student : Student;
 
   public averageMark: number;
-  public productivity: number;
+  public missings: number;
   public bestSubjectRating: Rating;
   public worstSubjectRating: Rating;
 
   private avgMarkSub: Subscription;
   private bestSubjSub: Subscription;
   private worstSubjSub: Subscription;
-  private productivitySub: Subscription;
+  private missingsSub: Subscription;
 
   constructor(private markService : MarkService) { }
 
@@ -30,7 +30,7 @@ export class StudentStatComponent implements OnChanges, OnDestroy {
       this.getStudentAvgMark();
       this.getStudentBestSubject();
       this.getStudentWorstSubject();
-      this.getStudentProductivity();
+      this.getStudentMissings();
     }
   }
 
@@ -38,7 +38,7 @@ export class StudentStatComponent implements OnChanges, OnDestroy {
     this.avgMarkSub?.unsubscribe();
     this.bestSubjSub?.unsubscribe();
     this.worstSubjSub?.unsubscribe();
-    this.productivitySub?.unsubscribe();
+    this.missingsSub?.unsubscribe();
   }
 
   getStudentAvgMark(): void {
@@ -53,8 +53,8 @@ export class StudentStatComponent implements OnChanges, OnDestroy {
     this.worstSubjSub = this.markService.getStudentWorstSubject(this.student.id).subscribe((worstSubj: Rating) => this.worstSubjectRating = worstSubj);
   }
 
-  getStudentProductivity(): void {
-    this.productivitySub = this.markService.getStudentProductivity(this.student.id).subscribe((prod: number) => this.productivity = prod);
+  getStudentMissings(): void {
+    this.missingsSub = this.markService.getMissingsForStudent(this.student.id).subscribe((mis: number) => this.missings = mis);
   }
 
 }

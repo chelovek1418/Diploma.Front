@@ -15,31 +15,31 @@ export class StatByLessonComponent implements OnChanges, OnDestroy {
   @Input() student : Student;
 
   public studentAvg : number;
-  public productivity: number;
+  public missings : number;
 
   private studentAvgSub : Subscription;
-  private productivitySub: Subscription;
+  private missingsSub : Subscription;
 
   constructor(private markService : MarkService) { }
 
   ngOnChanges(): void {
     if (this.student && this.lesson){
       this.getStudentAvgarkByLesson();
-      this.getStudentProductivity();
+      this.getMissings();
     }
   }
 
   ngOnDestroy(): void {
     this.studentAvgSub?.unsubscribe();
-    this.productivitySub?.unsubscribe();
+    this.missingsSub?.unsubscribe();
   }
 
   getStudentAvgarkByLesson(): void {
     this.studentAvgSub = this.markService.getAverageForStudentByLesson(this.student.id, this.lesson.id).subscribe((mark : number) => this.studentAvg = mark);
   }
 
-  getStudentProductivity(): void {
-    this.productivitySub = this.markService.getStudentProductivity(this.student.id).subscribe((prod: number) => this.productivity = prod);
+  getMissings(): void {
+    this.missingsSub = this.markService.getMissingsForStudentByLesson(this.student.id, this.lesson.id).subscribe((mis : number) => this.missings = mis);
   }
 
 }

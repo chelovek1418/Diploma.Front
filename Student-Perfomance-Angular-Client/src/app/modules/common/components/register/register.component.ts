@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public userFormGroup: FormGroup;
   public roleFormGroup: FormGroup;
   public groups: Group[] = [];
+  public teacherInfo: boolean = false;
 
   private registerSub: Subscription;
   private groupSub: Subscription;
@@ -65,7 +66,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isStudent = isStudent;
     this.firstFormGroup.controls['firstCtrl'].setValue(true);
     if (isStudent){
-      this.roleFormGroup.addControl('group', new FormControl('', Validators.required));
+      this.roleFormGroup.addControl('group', new FormControl(''));
+      // , Validators.required
     } else {
       this.roleFormGroup.addControl('position', new FormControl('', Validators.required));
     }
@@ -78,7 +80,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerSub = this.studentService.addStudent(student).subscribe((data: Student) => this.router.navigate(['/students/', data.id]));
     } else {
       const teacher: Teacher = { user: user, position: this.roleFormGroup.value.position };
-      this.registerSub = this.teacherService.create(teacher).subscribe((data: Teacher) => this.router.navigate(['/teachers/', data.id]));
+      this.registerSub = this.teacherService.create(teacher).subscribe(_ => this.teacherInfo = true);
     }
   }
 

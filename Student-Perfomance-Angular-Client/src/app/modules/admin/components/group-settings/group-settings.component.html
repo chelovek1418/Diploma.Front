@@ -74,16 +74,6 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
-            <mat-form-field color="accent" appearance="outline">
-                <mat-label>Curator</mat-label>
-                <mat-select formControlName="curator">
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let stud of group.students" [value]="stud">
-                        {{stud.user.lastName +' '+ stud.user.firstName + ' (' + stud.user.email + ')' }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </div>
         <div class="action-buttons-container">
             <button mat-stroked-button color="warn" (click)="delete()">Delete group</button>

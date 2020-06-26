@@ -7,6 +7,9 @@
     justify-content: space-between;
     flex-wrap: wrap;
 }
+.settings-container > form {
+    width: 100%;
+}
 .fields-container > mat-form-field {
     margin: 0 10px;
 }

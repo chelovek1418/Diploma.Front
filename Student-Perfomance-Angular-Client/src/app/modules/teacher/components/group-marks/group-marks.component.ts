@@ -6,6 +6,9 @@ import { GroupService } from 'src/app/services/group/group.service';
 import { Student } from 'src/app/modules/common/models/interfaces/student';
 import { MarkService } from 'src/app/services/mark/mark.service';
 import { Mark } from 'src/app/modules/common/models/interfaces/mark';
+import { DetailService } from 'src/app/services/detail/detail.service';
+import { Subscription } from 'rxjs';
+import { Detail } from 'src/app/modules/common/models/interfaces/details';
 
 @Component({
   selector: 'app-group-marks',
@@ -16,6 +19,9 @@ export class GroupMarksComponent implements OnInit, OnChanges {
 
   private markToSet: Mark;
   private totalMarks: Mark[];
+  private semestr: number = new Date().getMonth() >= 8 ? 0 : 1;
+  private details: Detail[];
+  private detailsSub: Subscription;
 
   public daysInMonth: Date[];
   public displayedColumns: string[];
@@ -24,35 +30,47 @@ export class GroupMarksComponent implements OnInit, OnChanges {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  @Input() teacherId: number;
   @Input() groupId: number;
   @Input() lessonId: number;
   @Input() month: Date;
   @Output() selectedStudent = new EventEmitter<Student>();
 
-  constructor(private groupService: GroupService, private markService: MarkService) { }
+  constructor(private groupService: GroupService, private markService: MarkService, private detailsService: DetailService) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
   }
 
   ngOnChanges() {
-    this.updateData();
+    if (this.teacherId && this.groupId && this.lessonId) {
+      this.detailsSub = this.detailsService.getForTeacherByLessonAndGroup(this.teacherId, this.lessonId, this.groupId, this.semestr).subscribe((data: Detail[]) => {
+        this.details = data;
+        this.updateData();
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.detailsSub?.unsubscribe();
   }
 
   updateData(): void {
     this.dataSource.data = [];
     if (this.month) {
-      this.daysInMonth = this.getDaysInMonth(this.month.getMonth(), this.month.getFullYear());
+      this.daysInMonth = this.getDaysInMonth(this.month.getMonth(), this.month.getFullYear()).filter(x => {
+        const dayOfWeekJs = x.getDay() -1;
+        const dayOfWeek = dayOfWeekJs === -1 ? 0 : dayOfWeekJs;
+        return this.details.find(y => y.dayOfWeek === dayOfWeek) != null;
+      });
       this.displayedColumns = this.daysInMonth.map(x => x.getDate().toString());
       this.displayedColumns.unshift('fullName');
       this.displayedColumns.push('total');
-      if (this.groupId && this.lessonId) {
-        this.groupService.getGroupWithMarksByLesson(this.groupId, this.lessonId, this.month).subscribe((data: Group) => {
-          this.group = data;
-          this.dataSource.data = this.group.students.sort((a, b) => (a.user.lastName > b.user.lastName) ? 1 : ((b.user.lastName > a.user.lastName) ? -1 : 0));
-        });
-        this.markService.getTotalMarksForGroupByLesson(this.groupId, this.lessonId).subscribe((totals: Mark[]) => this.totalMarks = totals);
-      }
+      this.groupService.getGroupWithMarksByLesson(this.groupId, this.lessonId, this.month).subscribe((data: Group) => {
+        this.group = data;
+        this.dataSource.data = this.group.students.sort((a, b) => (a.user.lastName > b.user.lastName) ? 1 : ((b.user.lastName > a.user.lastName) ? -1 : 0));
+      });
+      this.markService.getTotalMarksForGroupByLesson(this.groupId, this.lessonId).subscribe((totals: Mark[]) => this.totalMarks = totals);
     }
   }
 
@@ -68,7 +86,7 @@ export class GroupMarksComponent implements OnInit, OnChanges {
 
   getMark(student: Student, day: number): number {
     let mark = this.group.students.find(s => s.id === student.id).marks.find(m => new Date(m.markDate).getDate() == day)?.mark;
-    return mark === 0 ? -1 : mark;
+    return mark === null ? -1 : mark;
   }
 
   getTotal(studentId: number): number {
@@ -77,7 +95,7 @@ export class GroupMarksComponent implements OnInit, OnChanges {
 
   setMark(student: Student, day: number, mark: number): void {
     const dayOfWeek = this.daysInMonth[day - 1].getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6 || mark < -1 || mark > 99 || new Date(this.month.getFullYear(), this.month.getMonth(), day) > new Date() ) {
+    if (dayOfWeek === 0 || dayOfWeek === 6 || mark < -1 || mark > 99 || new Date(this.month.getFullYear(), this.month.getMonth(), day) > new Date()) {
       this.markToSet = null;
       return;
     }
@@ -98,6 +116,9 @@ export class GroupMarksComponent implements OnInit, OnChanges {
     if (this.markToSet && this.markToSet.markDate.getDate() == day && this.markToSet.studentId === student.id) {
       const editableStudent = this.group.students.find(s => s.id === student.id);
       let totalForStudent = this.totalMarks.find(x => x.studentId == student.id);
+      if (!totalForStudent?.mark) {
+        totalForStudent = {studentId: student.id, lessonId: this.lessonId, mark: 0, markDate: new Date()};
+      }
       if (this.getMark(student, day)) {
         let perviousMark = editableStudent.marks.find(m => new Date(m.markDate).getDate() == day);
         if (this.markToSet.mark == 0) {
@@ -110,22 +131,22 @@ export class GroupMarksComponent implements OnInit, OnChanges {
           });
         }
         else {
-          const difference = this.markToSet.mark - perviousMark.mark;
-          perviousMark.mark = + this.markToSet.mark;
-          this.markService.editMark(perviousMark).subscribe(_ => {
-            totalForStudent.mark += difference;
-          });
+          const difference = this.markToSet.mark > 0 ? this.markToSet.mark - perviousMark.mark : (perviousMark.mark * (-1));
+          perviousMark.mark = (+this.markToSet.mark === -1 ? null : +this.markToSet.mark);
+          this.markService.editMark(perviousMark).subscribe(_ => totalForStudent.mark += difference);
         }
       }
       else {
         if (this.markToSet.mark != 0) {
-          this.markToSet.mark =+ this.markToSet.mark;
+          this.markToSet.mark = (+this.markToSet.mark === -1 ? null : +this.markToSet.mark);
           this.markService.setMark(this.markToSet).subscribe((x: Mark) => {
             editableStudent.marks.push(x);
-            totalForStudent.mark += x.mark;
+            if (x.mark) {
+              totalForStudent.mark += x.mark;
+            }
           });
         }
-      } 
+      }
     }
     this.markToSet = null;
   }

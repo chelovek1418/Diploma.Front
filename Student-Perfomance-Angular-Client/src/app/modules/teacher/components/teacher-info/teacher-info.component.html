@@ -4,7 +4,8 @@
             <i class="fas fa-user-tie fa-3x"></i>
         </div>
         <div class="header-info">
-            <h4>{{teacher.user.firstName + ' ' + teacher.user.lastName + ' ' + (teacher.user.patronymic ? teacher.user.patronymic : '')}}</h4>
+            <h4>{{teacher.user.firstName + ' ' + teacher.user.lastName + ' ' + (teacher.user.patronymic ? teacher.user.patronymic : '')}}
+            </h4>
             <p><em>{{teacher.user.email}}</em></p>
             <p>Position: <em>{{teacher.position}}</em></p>
         </div>
@@ -21,33 +22,28 @@
                 <p>{{'Position: ' + teacher.position}}</p>
             </div>
         </mat-tab>
-        <mat-tab label="Statistic">
+        <!-- <mat-tab label="Statistic">
             <div class="tab-container">
                 STATISTIC
+            </div>
+        </mat-tab> -->
+        <mat-tab label="Journal">
+            <div class="tab-container">
+                <app-journal [teacher]="teacher"></app-journal>
             </div>
         </mat-tab>
         <mat-tab label="Schedule">
             <div class="tab-container">
-                <app-teacher-schedule (selectedDayPair)="selectedDayPair = $event" [teacher]="teacher"></app-teacher-schedule>
+                <app-teacher-schedule (selectedDayPair)="selectedDayPair = $event" [teacher]="teacher">
+                </app-teacher-schedule>
                 <div class="invisible-divider"></div>
-                <!-- <mat-accordion *ngIf="selectedDayPair">
-                    <mat-expansion-panel *ngFor="let detail of selectedDetails">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <a routerLink="/lessons/{{detail.subject?.id}}">
-                                    {{detail.subject?.title}}
-                                </a>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <app-detail-info [detail]="detail"></app-detail-info>
-                    </mat-expansion-panel>
-                </mat-accordion> -->
-                </div>
+                <app-schedule-settings (detailUpdated)="getTeacher()" [teacher]="teacher" [dayPair]="selectedDayPair"></app-schedule-settings>
+            </div>
         </mat-tab>
         <mat-tab label="Lessons">
-            <!-- <div class="tab-container">
-                <app-group-lessons [group]="group"></app-group-lessons>
-            </div> -->
+            <div class="tab-container">
+                <app-teacher-lessons [teacher]="teacher"></app-teacher-lessons>
+            </div>
         </mat-tab>
         <mat-tab label="Settings">
             <div class="tab-container">

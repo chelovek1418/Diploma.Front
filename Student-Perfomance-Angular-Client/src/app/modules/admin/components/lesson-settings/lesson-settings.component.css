@@ -1,16 +1,23 @@
-form {
+.fields-container {
     display: flex;
-    flex-direction: column;
-}
-form > mat-form-field, button {
-    width: fit-content;
+    flex-wrap: wrap;
 }
 .settings-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.delete-button-container {
-    align-self: flex-end;
-    padding-top: 15px;
+.settings-container > form {
+    width: 100%;
+}
+.fields-container > mat-form-field {
+    margin: 0 10px;
+}
+.action-buttons-container {
+    width: 100%;
+    display: flex;
+    margin-top: 5px;
+    padding: 15px 10px 0 10px;
+    justify-content: space-between;
+    border-top: 1px #808080 solid;
 }

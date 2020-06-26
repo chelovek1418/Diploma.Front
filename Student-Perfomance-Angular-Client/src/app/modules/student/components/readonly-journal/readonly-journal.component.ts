@@ -82,7 +82,7 @@ export class ReadonlyJournalComponent implements OnInit, OnChanges, OnDestroy {
 
   getMark(lesson: Lesson, day: number): number {
     let mark = lesson.marks.find(m => new Date(m.markDate).getDate() === day)?.mark;
-    return mark === 0 ? -1 : mark;
+    return mark === null ? -1 : mark;
   }
 
   isOutlet(day: number): boolean {
@@ -111,7 +111,7 @@ export class ReadonlyJournalComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getTotalBySubject(subjectId: number): number {
-    return this.rating?.find(x => x.id === subjectId)?.rating;
+    return this.rating?.find(x => x.lessonId === subjectId)?.rating || 0;
   }
 
   selectLesson(less: Lesson) {
@@ -123,6 +123,9 @@ export class ReadonlyJournalComponent implements OnInit, OnChanges, OnDestroy {
     if (this.student && this.selectedDate.value) {
       this.lessonsSub = this.lessonService.getLessonsWithMarksForTimeByStudentId(this.student.id, this.selectedDate.value.toDate(), this.selectedDate.value.endOf('month').toDate())
         .subscribe((les: Lesson[]) => {
+          // for (const iterator of les) {
+          //   console.log(`${iterator.title} = ${iterator.id}`);
+          // }
           this.lessons = les;
           this.dataSource.data = les;
         });

@@ -46,6 +46,7 @@ import { MatTableModule } from '@angular/material/table';
 import { DetailInfoComponent } from './components/detail-info/detail-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { GroupCardComponent } from './components/group-card/group-card.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -74,6 +75,7 @@ import { GroupCardComponent } from './components/group-card/group-card.component
         MatSidenavModule,
         MatTableModule,
         MatExpansionModule,
+        MatMenuModule
     ],
     declarations: [
         GroupComponent,

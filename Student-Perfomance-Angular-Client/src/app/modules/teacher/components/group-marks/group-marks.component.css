@@ -33,6 +33,9 @@ td.mat-cell:not(:first-child) {
     opacity: 0.5;
     background: #1b1b1b;
 }
+.pair{
+    background-color: #94d6a6;
+}
 .mark-input{
     width: 100%;
     height: 100%;

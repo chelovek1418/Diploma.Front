@@ -3,8 +3,7 @@
     <mat-list>
         <div *ngFor="let student of paginatedStudents">
             <mat-list-item>
-                <a
-                    routerLink="/students/{{student.id}}">{{student.user.firstName + ' ' + student.user.lastName}}</a>
+                <a routerLink="/students/{{student.id}}">{{student.user.firstName + ' ' + student.user.lastName}}</a>&nbsp;{{'(' + student.user.department + ')'}}
             </mat-list-item>
             <mat-divider></mat-divider>
         </div>

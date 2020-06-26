@@ -10,6 +10,9 @@
     </mat-card-header>
     <mat-card-content>
         <p *ngIf="student.group"><strong>Group:</strong><a routerLink="/groups/{{student.group.id}}"> {{student.group.title}}</a></p>
-        <p *ngIf="avgMark"><strong>Average mark:</strong> {{avgMark}}</p>
+        <ul>
+            <li *ngIf="avgMark">Average mark: {{avgMark}}</li>
+            <li *ngIf="missings">Number of passes: {{missings}}</li>
+        </ul>
     </mat-card-content>
 </mat-card>

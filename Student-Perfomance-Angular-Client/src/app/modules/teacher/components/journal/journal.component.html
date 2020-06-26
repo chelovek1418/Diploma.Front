@@ -1,6 +1,7 @@
-<section>
+<div>
     <form class="d-flex flex-wrap">
-        <mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline">
             <mat-label>Lesson</mat-label>
             <mat-select [(value)]="selectedLesson">
                 <mat-option *ngFor="let lesson of lessons" [value]="lesson">
@@ -8,7 +9,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline">
             <mat-label>Group</mat-label>
             <mat-select [(value)]="selectedGroup">
                 <mat-option *ngFor="let group of groups" [value]="group">
@@ -16,7 +18,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline">
             <mat-label>Month</mat-label>
             <mat-select [(value)]="selectedMonth">
                 <mat-option *ngFor="let month of monthes" [value]="month">
@@ -24,11 +27,13 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+
     </form>
-</section>
-<app-group-marks (selectedStudent)="onStudentSelecting($event)" [groupId]="selectedGroup?.id"
+    <em>* Use '-1' to indicate that the student is absent *</em>
+</div>
+<app-group-marks (selectedStudent)="onStudentSelecting($event)" [teacherId]="teacher.id" [groupId]="selectedGroup?.id"
     [lessonId]="selectedLesson?.id" [month]="selectedMonth"></app-group-marks>
-<section class="stat" *ngIf="selectedLesson && selectedGroup">
+<div class="stat" *ngIf="selectedLesson && selectedGroup">
     <mat-accordion>
         <mat-expansion-panel *ngIf="selectedStudent">
             <mat-expansion-panel-header>
@@ -53,4 +58,4 @@
             <app-stat-by-lesson-group [group]="selectedGroup" [lesson]="selectedLesson"></app-stat-by-lesson-group>
         </mat-expansion-panel>
     </mat-accordion>
-</section>
+</div>

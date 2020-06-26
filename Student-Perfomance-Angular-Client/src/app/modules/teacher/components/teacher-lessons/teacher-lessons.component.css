@@ -1,0 +1,21 @@
+.list-item-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.header-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.group-list-header-container button {
+    height: fit-content;
+}
+form button {
+    margin-left: 15px;
+}
+.just-betw-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

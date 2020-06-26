@@ -11,4 +11,5 @@ export interface Detail {
     teacher?: Teacher;
     isNumerator?: boolean;
     semestr: number;
+    groupSubjectId?: number;
 }

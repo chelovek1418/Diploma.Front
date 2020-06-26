@@ -13,12 +13,12 @@
             <div class="header-info-block">
                 <p *ngIf="group.specialization">Specialization: <em>{{group.specialization}}</em></p>
             </div>
-            <div class="header-info-block">
+            <!-- <div class="header-info-block">
                 <p>Curator: <a *ngIf="group.curator" routerLink="/teachers/{{group.curator.id}}">
                         {{group.curator.user.lastName + (group.curator.user.patronymic ? ' ' + group.curator.user.patronymic[0] : '') + ' ' + group.curator.user.firstName[0]}}</a>
                     <span *ngIf="group.curator === null">-</span>
                 </p>
-            </div>
+            </div> -->
             <div class="header-info-block">
                 <p>Headmen: <a *ngIf="group.headmen" routerLink="/students/{{group.headmen.id}}">
                         {{group.headmen.user.lastName + ' ' + group.headmen.user.firstName}}</a>
@@ -28,11 +28,11 @@
         </div>
     </div>
     <mat-tab-group mat-stretch-tabs color="accent">
-        <mat-tab label="Statistic">
+        <!-- <mat-tab label="Statistic">
             <div class="tab-container">
                 STATISTIC
             </div>
-        </mat-tab>
+        </mat-tab> -->
         <mat-tab label="Students">
             <div class="tab-container">
                 <app-group-students [group]="group"></app-group-students>

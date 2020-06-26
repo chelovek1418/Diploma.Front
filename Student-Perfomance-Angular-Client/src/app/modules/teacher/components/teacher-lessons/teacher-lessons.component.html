@@ -1,1 +1,43 @@
-<p>teacher-lessons works!</p>
+<div *ngIf="teacher">
+    <div class="header-container">
+        <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
+            type="button">Add Lesson</button>
+    </div>
+    <mat-list *ngIf="teacherLessons; else noLessons">
+        <div *ngFor="let lesson of teacherLessons">
+            <mat-list-item>
+                <div class="list-item-container">
+                    <a routerLink="/lessons/{{lesson.id}}">
+                        {{lesson.title}}
+                    </a>
+                    <button mat-icon-button color="warn" type="button" (click)="dropLesson(lesson)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <ng-template #noLessons>
+        No lessons
+    </ng-template>
+    <ng-template #searchForm>
+        <form>
+            <mat-form-field color="accent">
+                <input type="text" #searchBox placeholder="Lesson" matInput [(ngModel)]="term" name="term"
+                    (input)="searchLessons(searchBox.value)" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let less of foundLessons$ | async" [value]="less.title">
+                        <div class="just-betw-container">
+                            <a routerLink="/lessons/{{less.id}}">{{less.title}}</a>
+                            <button type="button" mat-icon-button color="accent" (click)="addLesson(less)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
+        </form>
+    </ng-template>
+</div>

@@ -1,1 +1,108 @@
-<p>teacher-settings works!</p>
+<div class="settings-container" *ngIf="teacher">
+    <form [formGroup]="updateForm" novalidate (ngSubmit)="submit()">
+        <div class="fields-container">
+            <ng-container formGroupName="user">
+
+                <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput #input maxlength="20" type="text" formControlName="firstName" required>
+                    <mat-error
+                        *ngIf="userForm.controls['firstName'].touched && userForm.controls['firstName'].dirty && userForm.controls['firstName'].invalid">
+                        <div *ngIf="userForm.controls['firstName'].errors.required">First Name is required</div>
+                        <div *ngIf="userForm.controls['firstName'].errors.minlength">First Name must be at least 2
+                            characters long</div>
+                        <div *ngIf="userForm.controls['firstName'].errors.maxlength">First Name must be less then 20
+                            characters long</div>
+                    </mat-error>
+                    <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput maxlength="20" type="text" formControlName="lastName" required>
+                    <mat-error
+                        *ngIf="userForm.controls['lastName'].touched && userForm.controls['lastName'].dirty && userForm.controls['lastName'].invalid">
+                        <div *ngIf="userForm.controls['lastName'].errors.required">Last Name is required</div>
+                        <div *ngIf="userForm.controls['lastName'].errors.minlength">Last Name must be at least 2
+                            characters
+                            long</div>
+                        <div *ngIf="userForm.controls['lastName'].errors.maxlength">Last Name must be less then 20
+                            characters long</div>
+                    </mat-error>
+                    <mat-hint align="end">{{userForm.controls['lastName'].value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                    <mat-label>Patronymic</mat-label>
+                    <input matInput maxlength="30" type="text" formControlName="patronymic">
+                    <mat-error
+                        *ngIf="userForm.controls['patronymic'].touched && userForm.controls['patronymic'].dirty && userForm.controls['patronymic'].invalid">
+                        <div *ngIf="userForm.controls['patronymic'].errors.maxlength">Patronymic must be less then 20
+                            characters long</div>
+                    </mat-error>
+                    <mat-hint align="end">{{userForm.controls['patronymic'].value?.length || 0}}/30</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput maxlength="30" type="email" formControlName="email" required>
+                    <mat-error
+                        *ngIf="userForm.controls['email'].touched && userForm.controls['email'].dirty && userForm.controls['email'].invalid">
+                        <div *ngIf="userForm.controls['email'].errors.required">Email is required</div>
+                        <div *ngIf="userForm.controls['email'].errors.email">Invalid email format</div>
+                        <div *ngIf="userForm.controls['email'].errors.minlength">Email must be at least 5 characters
+                            long
+                        </div>
+                        <div *ngIf="userForm.controls['email'].errors.maxlength">Email must be less then 30 characters
+                            long
+                        </div>
+                    </mat-error>
+                    <mat-hint align="end">{{userForm.controls['email'].value?.length || 0}}/30</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput maxlength="15" type="tel" formControlName="phoneNumber" required>
+                    <mat-error
+                        *ngIf="userForm.controls['phoneNumber'].touched && userForm.controls['phoneNumber'].dirty && userForm.controls['phoneNumber'].invalid">
+                        <div *ngIf="userForm.controls['phoneNumber'].errors.required">Phone number is required</div>
+                        <div *ngIf="userForm.controls['phoneNumber'].errors.maxlength">Phone number must be less then 15
+                            characters long</div>
+                    </mat-error>
+                    <mat-hint align="end">{{userForm.controls['phoneNumber'].value?.length || 0}}/15</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field color="accent" hintLabel="Max 20 characters" appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <input matInput maxlength="20" type="text" formControlName="department" required>
+                    <mat-error
+                        *ngIf="userForm.controls['department'].touched && userForm.controls['department'].dirty && userForm.controls['department'].invalid">
+                        <div *ngIf="userForm.controls['department'].errors.required">Phone number is required</div>
+                        <div *ngIf="userForm.controls['department'].errors.maxlength">Phone number must be less then 20
+                            characters long</div>
+                    </mat-error>
+                    <mat-hint align="end">{{userForm.controls['department'].value?.length || 0}}/20</mat-hint>
+                </mat-form-field>
+
+            </ng-container>
+
+            <mat-form-field color="accent" hintLabel="Max 30 characters" appearance="outline">
+                <mat-label>Position</mat-label>
+                <input matInput maxlength="30" type="text" formControlName="position" required>
+                <mat-error
+                    *ngIf="updateForm.controls['position'].touched && updateForm.controls['position'].dirty && updateForm.controls['position'].invalid">
+                    <div *ngIf="updateForm.controls['position'].errors.required">Position is required</div>
+                    <div *ngIf="updateForm.controls['position'].errors.maxlength">Position must be less then 30
+                        characters long</div>
+                </mat-error>
+                <mat-hint align="end">{{updateForm.controls['position'].value?.length || 0}}/30</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="action-buttons-container">
+            <button mat-stroked-button color="warn" (click)="delete()">Delete account</button>
+            <button mat-stroked-button color="accent" type="submit"
+                [disabled]="updateForm.invalid || userForm.invalid || updateForm.pristine && userForm.pristine">Save</button>
+        </div>
+    </form>
+
+</div>

@@ -46,7 +46,7 @@ export class TeacherScheduleComponent implements OnInit, OnChanges, OnDestroy {
   
   havePair(pair: number, dayOfWeek: number): boolean {
     const filtered = this.filterDetails(pair, dayOfWeek);
-    if (filtered.length > 0){
+    if (filtered?.length > 0){
       this.selectedDetails = filtered;
       if (filtered[1]?.isNumerator === true){
         const numerator = filtered[1];
@@ -62,6 +62,7 @@ export class TeacherScheduleComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private filterDetails(pair: number, dayOfWeek: number): Detail[] {
-    return this.details.filter(x => x.dayOfWeek == dayOfWeek && x.pair == pair);
+    return this.details?.filter(x => x.dayOfWeek == dayOfWeek && x.pair == pair);
   }
+  
 }
