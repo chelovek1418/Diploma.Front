@@ -1,0 +1,34 @@
+<section class="settings-container" *ngIf="dayPair">
+    <h3>{{(daysOfWeek[dayPair.day] | uppercase) + ' ' + (dayPair.pair + 1) + ' pair'}}</h3>
+    <div *ngIf="selectedDetails.length > 0; else noDetails">
+        <article *ngFor="let det of selectedDetails">
+            <a *ngIf="det.subject" routerLink="/lessons/{{det.subject.id}}">
+                <h4>{{det.subject.title}}</h4>
+            </a>
+            <p *ngIf="det.group">Group: <a routerLink="/groups/{{det.group.id}}">{{det.group.title}}</a>
+            <p *ngIf="det.isNumerator === null">Every week</p>
+            <p *ngIf="det.isNumerator === true">Numerical weeks only</p>
+            <p *ngIf="det.isNumerator === false">Denominator weeks only</p>
+            <div class="action-buttons-container">
+                <mat-button-toggle-group name="Periodic">
+                    <mat-button-toggle [class.focused]="det.isNumerator === null" (click)="edit(det, null)">Every week
+                    </mat-button-toggle>
+                    <mat-button-toggle [class.focused]="det.isNumerator === true" (click)="edit(det, true)">Numerical
+                        weeks only</mat-button-toggle>
+                    <mat-button-toggle [class.focused]="det.isNumerator === false" (click)="edit(det, false)">
+                        Denominator weeks only</mat-button-toggle>
+                </mat-button-toggle-group>
+                <button mat-stroked-button color="warn" (click)="delete(det)">Delete</button>
+            </div>
+        </article>
+    </div>
+    <ng-template #noDetails>
+        <p>There are no lessons on this day of the week.</p>
+    </ng-template>
+    <div *ngIf="!creating; else addDetails">
+        <button mat-stroked-button color="accent" (click)="creating = true" *ngIf="selectedDetails.length < 2">Add</button>
+    </div>
+    <ng-template #addDetails>
+        <app-add-detail (operationEnded)="creating = false; detailUpdated.emit(); filterDetails();" [teacher]="teacher" [dayPair]="dayPair"></app-add-detail>
+    </ng-template>
+</section>

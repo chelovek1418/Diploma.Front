@@ -1,0 +1,38 @@
+<div *ngIf="lessons?.length > 0">
+    <form [formGroup]="detailForm" novalidate (ngSubmit)="submit()">
+        <div class="fields-container">
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Subject</mat-label>
+                <mat-select (selectionChange)="selectLesson($event.value)" formControlName="subject" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let lesson of lessons" [value]="lesson">
+                        {{lesson.title}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Group</mat-label>
+                <mat-select formControlName="group" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let gr of groups" [value]="gr">
+                        {{gr.title}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field color="accent" hintLabel="Default is 'Every week'" appearance="outline">
+                <mat-select [(value)]="selectedPeriod" placeholder="Every week" formControlName="isNumerator">
+                    <mat-option *ngFor="let op of options" [value]="op.value">{{op.view}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="action-buttons-container">
+            <button mat-stroked-button color="warn" (click)="operationEnded.emit()">Cancel</button>
+            <button mat-stroked-button color="accent" type="submit"
+                [disabled]="detailForm.invalid">Create</button>
+        </div>
+
+    </form>
+</div>

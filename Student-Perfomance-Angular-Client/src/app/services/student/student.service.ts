@@ -4,6 +4,7 @@ import { Student } from 'src/app/modules/common/models/interfaces/student';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { HandleService } from '../handle/handle.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,71 +12,81 @@ import { environment } from 'src/environments/environment';
 export class StudentService {
 
   private readonly apiUrl: string = `${environment.apiUrl}/students`;
-  
+
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private handleService: HandleService) { }
 
-  getBestStudents(date? : Date) : Observable<Student[]> {
-    return this.http.get<Student[]>(this.apiUrl + `/GetBestStudents?startDate=${date?.toISOString()}&endDate=${date?.toISOString()}`,).pipe(
-      catchError(this.handleError<Student[]>('getBestStudents', []))
+  getBestStudents(date?: Date): Observable<Student[]> {
+    return this.http.get<Student[]>(this.apiUrl + `/GetBestStudents?startDate=${date?.toISOString()}&endDate=${date?.toISOString()}`).pipe(
+      catchError(this.handleService.handleError<Student[]>('getBestStudents', []))
     );
   }
 
-  getStudents() : Observable<Student[]> {
+  getStudents(): Observable<Student[]> {
     // if (take < 0 || skip < 0)
     //   return of([]);
     return this.http.get<Student[]>(this.apiUrl).pipe(
-      catchError(this.handleError<Student[]>('getStudents', []))
+      catchError(this.handleService.handleError<Student[]>('getStudents', []))
+    );
+  }
+
+  getCount(): Observable<number> {
+    return this.http.get<number>(this.apiUrl + '/Count').pipe(
+      catchError(this.handleService.handleError<number>('getCount'))
     );
   }
 
   getBestStudent(): Observable<Student> {
     return this.http.get<Student>(this.apiUrl + '/GetBestStudent').pipe(
-      catchError(this.handleError<Student>('getBestStudent'))
+      catchError(this.handleService.handleError<Student>('getBestStudent'))
     );
   }
 
   getTopRatedStudentInGroupByLesson(lessonId: number, groupId: number): Observable<Student> {
     const url = `${this.apiUrl}/GetBestStudentForLessonInGroup?lessonId=${lessonId}&groupId=${groupId}`;
     return this.http.get<Student>(url).pipe(
-      catchError(this.handleError<Student>(`getTopRatedStudentInGroupByLesson lessonId=${lessonId} & groupId=${groupId}`))
+      catchError(this.handleService.handleError<Student>(`getTopRatedStudentInGroupByLesson lessonId=${lessonId} & groupId=${groupId}`))
     );
   }
 
   getWorstRatedStudentInGroupByLesson(lessonId: number, groupId: number): Observable<Student> {
     const url = `${this.apiUrl}/GetWorstStudentForLessonInGroup?lessonId=${lessonId}&groupId=${groupId}`;
     return this.http.get<Student>(url).pipe(
-      catchError(this.handleError<Student>(`getWorstRatedStudentInGroupByLesson lessonId=${lessonId} & groupId=${groupId}`))
+      catchError(this.handleService.handleError<Student>(`getWorstRatedStudentInGroupByLesson lessonId=${lessonId} & groupId=${groupId}`))
     );
   }
 
   getStudent(id: number): Observable<Student> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Student>(url).pipe(
-      catchError(this.handleError<Student>(`getStudent id=${id}`))
+      catchError((err: any) => {
+        this.handleService.handleError<Student>(`getStudent id=${id}`);
+        throw err;
+      }
+      )
     );
   }
 
-  addStudent (user: Student): Observable<Student> {
+  addStudent(user: Student): Observable<Student> {
     return this.http.post<Student>(this.apiUrl, user, this.httpOptions).pipe(
-      catchError(this.handleError<Student>('addStudent'))
+      catchError(this.handleService.handleError<Student>('addStudent'))
     );
   }
 
-  updateStudent (student: Student): Observable<any> {
+  updateStudent(student: Student): Observable<any> {
     const url = `${this.apiUrl}/${student.id}`;
     return this.http.put(url, student, this.httpOptions).pipe(
-      catchError(this.handleError<any>('student'))
+      catchError(this.handleService.handleError<any>('student'))
     );
   }
 
-  delete (id: number): Observable<Student> {
-    const url = `${this.apiUrl}/${id}`;  
+  delete(id: number): Observable<Student> {
+    const url = `${this.apiUrl}/${id}`;
     return this.http.delete<Student>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Student>('delete'))
+      catchError(this.handleService.handleError<Student>('delete'))
     );
   }
 
@@ -85,19 +96,8 @@ export class StudentService {
     }
     const url = `${this.apiUrl}/Search?search=${term}`;
     return this.http.get<Student[]>(url).pipe(
-      catchError(this.handleError<Student[]>('searchStudents', []))
+      catchError(this.handleService.handleError<Student[]>('searchStudents', []))
     );
-  }
-
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-  
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-  
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
   }
 
 }

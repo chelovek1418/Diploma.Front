@@ -1,1 +1,46 @@
-<p>lesson-teachers kek!</p>
+<div>
+    <div class="header-container">
+        <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
+            type="button">Add Teacher</button>
+    </div>
+    <mat-list *ngIf="lessonTeachers; else noTeachers">
+        <div *ngFor="let teacher of lessonTeachers">
+            <mat-list-item>
+                <div class="list-item-container">
+                    <span>
+                        {{teacher.position}}
+                        <a routerLink="/teachers/{{teacher.id}}">
+                            {{' '+ teacher.user.lastName + ' ' + teacher.user.firstName[0] + '. ' + (teacher.user.patronymic ? teacher.user.patronymic[0] : '')}}
+                        </a>
+                    </span>
+                    <button mat-icon-button color="warn" type="button" (click)="dropTeacher(teacher)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-list>
+    <ng-template #noTeachers>
+        No Teachers
+    </ng-template>
+    <ng-template #searchForm>
+        <form>
+            <mat-form-field color="accent">
+                <input type="text" #searchBox placeholder="Teacher" matInput [(ngModel)]="term" name="term"
+                    (input)="searchTeachers(searchBox.value)" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let teach of foundTeachers$ | async" [value]="teach.user.email">
+                        <div class="just-betw-container">
+                            <a routerLink="/teachers/{{teach.id}}">{{teach.user.email}}</a>
+                            <button type="button" mat-icon-button color="accent" (click)="addTeacher(teach)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
+        </form>
+    </ng-template>
+</div>

@@ -1,9 +1,16 @@
-form {
+.fields-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.settings-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-form > mat-form-field {
+.settings-container > form {
+    width: 100%;
+}
+.fields-container > mat-form-field {
     margin: 0 10px;
 }
 .action-buttons-container {

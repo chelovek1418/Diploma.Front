@@ -23,6 +23,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TeacherScheduleComponent } from './components/teacher-schedule/teacher-schedule.component';
 import { TeacherSettingsComponent } from './components/teacher-settings/teacher-settings.component';
 import { TeacherLessonsComponent } from './components/teacher-lessons/teacher-lessons.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ScheduleSettingsComponent } from './components/schedule-settings/schedule-settings.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { AddDetailComponent } from './components/add-detail/add-detail.component';
 
 
 @NgModule({
@@ -40,6 +46,10 @@ import { TeacherLessonsComponent } from './components/teacher-lessons/teacher-le
         MatInputModule,
         StudentModule,
         MatTabsModule,
+        MatButtonModule,
+        MatListModule,
+        MatAutocompleteModule,
+        MatButtonToggleModule
     ],
     declarations: [
         GroupMarksComponent, 
@@ -53,7 +63,9 @@ import { TeacherLessonsComponent } from './components/teacher-lessons/teacher-le
         TeacherInfoComponent,
         TeacherScheduleComponent,
         TeacherSettingsComponent,
-        TeacherLessonsComponent
+        TeacherLessonsComponent,
+        ScheduleSettingsComponent,
+        AddDetailComponent
     ],
     exports: []
 })

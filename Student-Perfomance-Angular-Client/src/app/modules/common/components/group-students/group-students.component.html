@@ -1,4 +1,4 @@
-<section *ngIf="group">
+<div *ngIf="group">
     <div class="header-container">
         <button mat-stroked-button color="accent" *ngIf="!search; else searchForm" (click)="search = true"
             type="button">Add student</button>
@@ -37,4 +37,4 @@
             <button mat-stroked-button color="warn" type="button" (click)="search = false">Cancel</button>
         </form>
     </ng-template>
-</section>
+</div>

@@ -1,10 +1,10 @@
-<div *ngIf="details?.length > 0">
+<div>
     <mat-table [dataSource]="pairs">
 
         <ng-container *ngFor="let day of displayedColumns; let i = index" matColumnDef="{{displayedColumns[i]}}">
           <mat-header-cell *matHeaderCellDef> {{day | uppercase}} </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <div *ngIf="havePair(element, i)" (click)="selectDetail(element, i)">
+          <mat-cell *matCellDef="let element" (click)="selectDetail(element, i)">
+            <div *ngIf="havePair(element, i)">
               <div *ngIf="selectedDetails[0].isNumerator === null; else divided">
                 {{selectedDetails[0].subject?.title}}
               </div>

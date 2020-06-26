@@ -1,7 +1,5 @@
-import { Component, OnInit, OnChanges, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Group } from 'src/app/modules/common/models/interfaces/group';
-import { GroupService } from 'src/app/services/group/group.service';
 import { StudentService } from 'src/app/services/student/student.service';
 import { Student } from 'src/app/modules/common/models/interfaces/student';
 import { Subscription } from 'rxjs';
@@ -14,38 +12,30 @@ import { Router } from '@angular/router';
   templateUrl: './student-settings.component.html',
   styleUrls: ['./student-settings.component.css']
 })
-export class StudentSettingsComponent implements OnInit, OnChanges, OnDestroy {
+export class StudentSettingsComponent implements OnChanges, OnDestroy {
 
   @Input() student: Student;
   @Output() settingsChanged = new EventEmitter();
 
   public updateForm: FormGroup;
-  public groups: Group[];
 
-  public get userGroup(): FormGroup {
-    return this.updateForm.get('user') as FormGroup;
-  }
-
-  private groupSub: Subscription;
   private studentUpdateSub: Subscription;
   private dialogSub: Subscription;
   private deleteStudSub: Subscription;
 
   constructor(fb: FormBuilder,
     private dialog: MatDialog,
-    private groupService: GroupService,
     private studentService: StudentService,
     private router: Router) {
 
     this.updateForm = fb.group({
-      firstName: ["", [Validators.required, Validators.maxLength(20)]],
-      lastName: ["", [Validators.required, Validators.maxLength(20)]],
-      email: ["", [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(30)]]
+      firstName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+      lastName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
+      patronymic: ["", Validators.maxLength(30)],
+      email: ["", [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(30)]],
+      phoneNumber: ["", [Validators.required, Validators.maxLength(15)]],
+      department: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
     });
-  }
-
-  ngOnInit(): void {
-    this.getGroups();
   }
 
   ngOnChanges(): void {
@@ -53,27 +43,28 @@ export class StudentSettingsComponent implements OnInit, OnChanges, OnDestroy {
       this.updateForm.setValue({
         firstName: this.student.user.firstName,
         lastName: this.student.user.lastName,
-        email: this.student.user.email
+        email: this.student.user.email,
+        patronymic: this.student.user.patronymic,
+        phoneNumber: this.student.user.phoneNumber,
+        department: this.student.user.department
       });
     }
   }
 
   ngOnDestroy(): void {
-    this.groupSub?.unsubscribe();
     this.studentUpdateSub?.unsubscribe();
     this.dialogSub?.unsubscribe();
     this.deleteStudSub?.unsubscribe();
-  }
-
-  getGroups(): void {
-    this.groupSub = this.groupService.getGroups()
-      .subscribe(groups => this.groups = groups);
   }
 
   submit(): void {
     this.student.user.firstName = this.updateForm.controls['firstName'].value;
     this.student.user.lastName = this.updateForm.controls['lastName'].value;
     this.student.user.email = this.updateForm.controls['email'].value;
+    this.student.user.patronymic = this.updateForm.controls['patronymic'].value;
+    this.student.user.phoneNumber = this.updateForm.controls['phoneNumber'].value;
+    this.student.user.department = this.updateForm.controls['department'].value;
+
     this.studentUpdateSub = this.studentService.updateStudent(this.student).subscribe(_ => this.settingsChanged.emit());
   }
 

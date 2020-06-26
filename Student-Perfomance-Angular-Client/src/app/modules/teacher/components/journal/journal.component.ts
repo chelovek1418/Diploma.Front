@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Group } from 'src/app/modules/common/models/interfaces/group';
 import { Lesson } from 'src/app/modules/common/models/interfaces/lesson';
 import { GroupService } from 'src/app/services/group/group.service';
 import { LessonService } from 'src/app/services/lesson/lesson.service';
 import { Student } from 'src/app/modules/common/models/interfaces/student';
+import { Teacher } from 'src/app/modules/common/models/interfaces/teacher';
 
 @Component({
   selector: 'app-journal',
@@ -11,6 +12,9 @@ import { Student } from 'src/app/modules/common/models/interfaces/student';
   styleUrls: ['./journal.component.css']
 })
 export class JournalComponent implements OnInit {
+
+  @Input()
+  public teacher: Teacher;
 
   private _selectedLesson : Lesson;
 
@@ -31,8 +35,7 @@ export class JournalComponent implements OnInit {
 
   public get selectedLesson() { return this._selectedLesson; }
 
-  constructor(
-    private groupService : GroupService, 
+  constructor(private groupService : GroupService, 
     private lessonService : LessonService) { }
 
   ngOnInit(): void {
@@ -49,7 +52,7 @@ export class JournalComponent implements OnInit {
   }
 
   getMyLessons():void {
-    this.lessonService.getLessons().subscribe((data : Lesson[]) => this.lessons = data);
+    this.lessonService.getLessonsByTeacher(this.teacher.id).subscribe((data : Lesson[]) => this.lessons = data);
   }
 
   getMonthes():void {

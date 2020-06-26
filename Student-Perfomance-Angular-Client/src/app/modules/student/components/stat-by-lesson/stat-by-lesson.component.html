@@ -1,6 +1,8 @@
 <div *ngIf="student && lesson">
     <h4><a routerLink="/student/{{student.id}}">{{student.user.firstName + ' ' + student.user.lastName}}</a></h4>
-    <p><strong>Average grade in {{lesson.title}}:</strong> {{studentAvg}}</p>
-    <p><strong>Student productivity for week:</strong> {{productivity}}</p>
+    <ul>
+        <li>Average grade in {{lesson.title}}: {{studentAvg}}</li>
+        <li>Times passed {{lesson.title}}: {{missings}}</li>
+    </ul>
 
 </div>

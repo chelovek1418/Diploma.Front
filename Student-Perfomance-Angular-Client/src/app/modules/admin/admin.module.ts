@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { LessonTeachersComponent } from './components/lesson-teachers/lesson-teachers.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
     imports: [ 
@@ -33,6 +34,7 @@ import { LessonTeachersComponent } from './components/lesson-teachers/lesson-tea
         MatPaginatorModule,
         MatExpansionModule,
         MatSelectModule,
+        MatAutocompleteModule,
     ],
     declarations: [ AddGroupComponent,
         AddLessonComponent,

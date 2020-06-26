@@ -16,7 +16,7 @@
     <ng-container *ngFor="let dayOfMonth of daysInMonth; let i = index" matColumnDef="{{displayedColumns[i+1]}}">
       <th mat-header-cell *matHeaderCellDef>{{ daysInMonth[i] | date:'E'}}<br />{{ daysInMonth[i] | date:'dd'}}</th>
       <td mat-cell [class.outlet]="isOutlet(i)" [class.future]="isFuture(i)" class="student-mark"
-        *matCellDef="let element"> {{getMark(element, i+1)}} </td>
+        *matCellDef="let element"> {{getMark(element, i+1) === -1 ? 'N' : getMark(element, i+1)}} </td>
     </ng-container>
 
 

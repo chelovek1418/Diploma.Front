@@ -8,7 +8,10 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class AppComponent implements OnDestroy {
   
-  public title : string = 'Student Perfomance';
+  public readonly title : string = 'Student Perfomance';
+  public readonly author: string = "Chelyshev Danylo";
+  public readonly university: string = 'ХАI, кафедра комп’ютерних систем, мереж і кібербезпеки (503)';
+  public date: Date = new Date();
   public mobileQuery: MediaQueryList;
 
   private _mobileQueryListener: () => void;

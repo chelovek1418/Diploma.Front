@@ -2,6 +2,14 @@
 
   <section>
     <h3>GENERAL STATISTIC</h3>
+    <div class="card-block">
+      <ul>
+        <li>{{teacherCount}} teachers</li>
+        <li>{{studentCount}} students</li>
+        <li>{{groupCount}} groups</li>
+        <li>{{lessonCount}} lessons</li>
+      </ul>
+    </div>
   </section>
 
   <section *ngIf="students?.length > 0">

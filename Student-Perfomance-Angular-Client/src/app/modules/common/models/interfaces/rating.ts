@@ -1,5 +1,4 @@
 export interface Rating {
-    id?: number;
-    rating: number;
-    title:string;
+    rating?: number;
+    lessonId: number;
   }

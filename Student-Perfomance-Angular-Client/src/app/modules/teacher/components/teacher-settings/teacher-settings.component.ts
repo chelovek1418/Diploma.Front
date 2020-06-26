@@ -20,10 +20,6 @@ export class TeacherSettingsComponent implements OnChanges, OnDestroy {
   public updateForm: FormGroup;
   public userForm: FormGroup;
 
-  public get userGroup(): FormGroup {
-    return this.updateForm.get('user') as FormGroup;
-  }
-
   private teacherUpdateSub: Subscription;
   private dialogSub: Subscription;
   private deleteTeacherSub: Subscription;
@@ -60,6 +56,7 @@ export class TeacherSettingsComponent implements OnChanges, OnDestroy {
         department: this.teacher.user.department
       });
       this.updateForm.setValue({
+        user: this.userForm.value,
         position: this.teacher.position
       });
     }

@@ -21,8 +21,23 @@
             <app-general-navigation></app-general-navigation>
         </mat-sidenav>
 
-        <mat-sidenav-content>
-            <router-outlet></router-outlet>
+        <mat-sidenav-content class="general-container">
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+            <footer>
+                <section>
+                    <h5>Copyright © {{title | uppercase}}</h5>
+                    <div class="footer-container">
+                        <div>
+                            <p><small>{{author + '. ' + university}}</small></p>
+                        </div>
+                        <div>
+                            <p><small>{{date | date:"yyyy"}}. Все права защищены.</small></p>
+                        </div>
+                    </div>
+                </section>
+            </footer>
         </mat-sidenav-content>
     </mat-sidenav-container>
 

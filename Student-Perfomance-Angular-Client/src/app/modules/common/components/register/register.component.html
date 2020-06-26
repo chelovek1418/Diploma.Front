@@ -1,4 +1,4 @@
-<mat-horizontal-stepper color="accent" linear="true" #stepper>
+<mat-horizontal-stepper color="accent" linear="true" #stepper *ngIf="!teacherInfo; else teachInfo">
     <mat-step color="accent" [stepControl]="firstFormGroup">
         <ng-template color="accent" matStepLabel>Choose role</ng-template>
         <div class="card-container">
@@ -80,3 +80,7 @@
         </div>
     </mat-step>
 </mat-horizontal-stepper>
+<ng-template #teachInfo>
+    Application for registration accepted. Wait for the administrator to verify your identity. 
+    <a mat-stroked-button routerLink="">To main page</a>
+</ng-template>

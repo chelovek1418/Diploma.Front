@@ -17,7 +17,7 @@ export class GroupSettingsComponent implements OnChanges, OnDestroy {
 
   @Input() public group: Group;
   @Output() settingsChanged = new EventEmitter();
-  
+
   public updateForm: FormGroup;
   public get title() { return this.updateForm.get('title'); }
 
@@ -40,8 +40,7 @@ export class GroupSettingsComponent implements OnChanges, OnDestroy {
       year: ["", [Validators.required, Validators.max(6), Validators.min(1)]],
       speciality: ["", [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
       specialization: ["", Validators.maxLength(30)],
-      headmen: [""],
-      curator: [""]
+      headmen: [""]
     });
   }
 
@@ -51,8 +50,7 @@ export class GroupSettingsComponent implements OnChanges, OnDestroy {
     this.updateForm.controls['year'].setValue(this.group.year);
     this.updateForm.controls['speciality'].setValue(this.group.speciality);
     this.updateForm.controls['specialization'].setValue(this.group.specialization);
-    this.updateForm.controls['headmen'].setValue(this.group.headmen);
-    this.updateForm.controls['curator'].setValue(this.group.curator);
+    this.updateForm.controls['headmen'].setValue(this.group.students.find(x => x.id === this.group.headmen?.id));
   }
 
   ngOnDestroy(): void {
@@ -68,7 +66,7 @@ export class GroupSettingsComponent implements OnChanges, OnDestroy {
     });
 
     this.dialogSub = dialogRef.afterClosed().subscribe(result => {
-      if (result){
+      if (result) {
         this.deleteGroupSub = this.groupService.deleteGroup(this.group.id).subscribe(_ => this.router.navigate(['/groups']));
       }
     });
@@ -80,7 +78,6 @@ export class GroupSettingsComponent implements OnChanges, OnDestroy {
     this.group.speciality = this.updateForm.controls['speciality'].value;
     this.group.specialization = this.updateForm.controls['specialization'].value;
     this.group.faculty = this.updateForm.controls['faculty'].value;
-    this.group.curator = this.updateForm.controls['curator'].value;
     this.group.headmen = this.updateForm.controls['headmen'].value;
     this.updateGroupSub = this.groupService.updateGroup(this.group).subscribe(_ => this.settingsChanged.emit());
   }

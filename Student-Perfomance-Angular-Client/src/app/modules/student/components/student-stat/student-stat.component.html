@@ -1,9 +1,15 @@
 <section *ngIf="student">
-    <h3>Mark statistic</h3>
-    <div>
-      <p><strong>Average mark:</strong> {{averageMark}}</p>
-      <p><strong>Student productivity for week:</strong> {{productivity}}</p>
-      <p *ngIf="bestSubjectRating"><strong>Best subject: </strong><a routerLink="/lessons/{{bestSubjectRating.id}}">{{bestSubjectRating.title}}</a>({{bestSubjectRating.rating}})</p>
-      <p *ngIf="worstSubjectRating"><strong>Worst subject: </strong><a routerLink="/lessons/{{worstSubjectRating.id}}">{{worstSubjectRating.title}}</a>({{worstSubjectRating.rating}})</p>
-    </div>
+  <h3>Mark statistic</h3>
+  <div>
+    <ul>
+      <li>Average mark: {{averageMark}}</li>
+      <li>Number of passes: {{missings}}</li>
+      <li *ngIf="bestSubjectRating">Best subject: <a
+          routerLink="/lessons/{{bestSubjectRating.lessonId}}">{{bestSubjectRating.lessonId}}</a>({{bestSubjectRating.rating}})
+      </li>
+      <li *ngIf="worstSubjectRating">Worst subject: <a
+          routerLink="/lessons/{{worstSubjectRating.lessonId}}">{{worstSubjectRating.lessonId}}</a>({{worstSubjectRating.rating}})
+      </li>
+    </ul>
+  </div>
 </section>

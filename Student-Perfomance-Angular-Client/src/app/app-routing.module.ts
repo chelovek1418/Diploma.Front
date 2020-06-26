@@ -20,29 +20,30 @@ import { TeachersComponent } from './modules/common/components/teachers/teachers
 import { TeachersUnconfirmedComponent } from './modules/admin/components/teachers-unconfirmed/teachers-unconfirmed.component';
 import { StudentsListComponent } from './modules/common/components/students-list/students-list.component';
 import { TeacherInfoComponent } from './modules/teacher/components/teacher-info/teacher-info.component';
+import { Guard } from './modules/common/guard/guard';
 
 const studentChild: Routes = [
   { path: '', component: StudentsListComponent },
-  { path: 'stat', component: StudentStatComponent },
-  { path: ':id', component: StudentMainComponent},
+  { path: 'stat', component: StudentStatComponent, canActivate: [Guard] },
+  { path: ':id', component: StudentMainComponent, canActivate: [Guard]},
 ];
 
 const groupChild: Routes = [
   { path: '', component: GroupsComponent },
-  { path: 'add', component: AddGroupComponent},
-  { path: ':id', component: GroupComponent},
+  { path: 'add', component: AddGroupComponent, canActivate: [Guard]},
+  { path: ':id', component: GroupComponent, canActivate: [Guard]},
 ];
 
 const lessonChild: Routes = [
   { path: '', component: LessonsComponent },
-  { path: 'add-lesson', component: AddLessonComponent},
-  { path: ':id', component: LessonInfoComponent},
+  { path: 'add-lesson', component: AddLessonComponent, canActivate: [Guard]},
+  { path: ':id', component: LessonInfoComponent, canActivate: [Guard]},
 ];
 
 const teacherChild: Routes = [
   { path: '', component: TeachersComponent },
-  { path: 'unconfirmed', component: TeachersUnconfirmedComponent },
-  { path: ':id', component: TeacherInfoComponent },
+  { path: 'unconfirmed', component: TeachersUnconfirmedComponent, canActivate: [Guard] },
+  { path: ':id', component: TeacherInfoComponent, canActivate: [Guard] },
 ];
 
 const routes: Routes = [
@@ -53,7 +54,7 @@ const routes: Routes = [
   { path: 'lessons', component: LessonComponent, children : lessonChild },
   { path: 'groups', component: GroupGeneralComponent, children : groupChild },
   { path: 'students', component: StudentsComponent, children: studentChild },
-  { path: 'teachers', component: TeacherGeneralComponent, children: teacherChild },
+  { path: 'teachers', component: TeacherGeneralComponent, children: teacherChild, canActivate: [Guard] },
   { path: 'dashboard', component: DashboardComponent },
 
 ];

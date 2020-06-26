@@ -4,6 +4,8 @@ import { Teacher } from 'src/app/modules/common/models/interfaces/teacher';
 import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TeacherLesson } from 'src/app/modules/teacher/models/interfaces/TeacherLesson';
+import { HandleService } from '../handle/handle.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,30 +18,36 @@ export class TeacherService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private handleService: HandleService) { }
 
   create (teacher: Teacher): Observable<Teacher> {
     return this.http.post<Teacher>(this.apiUrl, teacher, this.httpOptions).pipe(
-      catchError(this.handleError<Teacher>('create'))
+      catchError(this.handleService.handleError<Teacher>('create'))
     );
   }
 
   getAll() : Observable<Teacher[]> {
     return this.http.get<Teacher[]>(this.apiUrl).pipe(
-      catchError(this.handleError<Teacher[]>('getAll', []))
+      catchError(this.handleService.handleError<Teacher[]>('getAll', []))
     );
   }
 
   get(id: number): Observable<Teacher> {
     return this.http.get<Teacher>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError<Teacher>('get'))
+      catchError(this.handleService.handleError<Teacher>('get'))
+    );
+  }
+
+  getCount(): Observable<number> {
+    return this.http.get<number>(this.apiUrl + '/Count').pipe(
+      catchError(this.handleService.handleError<number>('getCount'))
     );
   }
 
   update(teacher: Teacher): Observable<any> {
     const url = `${this.apiUrl}/${teacher.id}`;
     return this.http.put(url, teacher, this.httpOptions).pipe(
-      catchError(this.handleError<any>('update'))
+      catchError(this.handleService.handleError<any>('update'))
     );
   }
 
@@ -47,31 +55,44 @@ export class TeacherService {
     const url = `${this.apiUrl}/${teacherId}`;
   
     return this.http.delete<Teacher>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Teacher>('delete'))
+      catchError(this.handleService.handleError<Teacher>('delete'))
+    );
+  }
+  
+  search(term : string) : Observable<Teacher[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+    return this.http.get<Teacher[]>(`${this.apiUrl}/Search?search=${term}`).pipe(
+      catchError(this.handleService.handleError<Teacher[]>('search', []))
+    );
+  }
+
+  getTeachersByLesson (lessonId: number): Observable<Teacher[]> {
+    return this.http.get<Teacher[]>(`${this.apiUrl}/GetByLesson?lessonId=${lessonId}`).pipe(
+      catchError(this.handleService.handleError<Teacher[]>('getTeachersByLesson', []))
     );
   }
 
   confirmTeacher(id: number): Observable<any> {
     return this.http.post<number>(this.apiUrl + '/ConfirmTeacher', id, this.httpOptions).pipe(
-      catchError(this.handleError<void>('confirmTeacher'))
+      catchError(this.handleService.handleError<void>('confirmTeacher'))
     );
   }
 
   getUnconfirmed() : Observable<Teacher[]> {
     return this.http.get<Teacher[]>(this.apiUrl + '/GetUnconfirmedTeachers').pipe(
-      catchError(this.handleError<Teacher[]>('getUnconfirmed', []))
+      catchError(this.handleService.handleError<Teacher[]>('getUnconfirmed', []))
     );
   }
-
-
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
   
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-  
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  dropLessonForTeacher(teacherLesson: TeacherLesson) : Observable<any> {
+    return this.http.post<TeacherLesson>(this.apiUrl + '/DropLessonForTeacher', teacherLesson, this.httpOptions).pipe(
+      catchError(this.handleService.handleError<void>('dropLessonForTeacher')));
+  }
+
+  addLessonForTeacher(teacherLesson: TeacherLesson) : Observable<any> {
+    return this.http.post<TeacherLesson>(this.apiUrl + '/AddLessonForTeacher', teacherLesson, this.httpOptions).pipe(
+      catchError(this.handleService.handleError<void>('addLessonForTeacher')));
   }
 }
